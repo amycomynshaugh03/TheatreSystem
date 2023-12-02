@@ -82,5 +82,29 @@ fun addEvent() {
 
 fun listEvent() = println(theatreAPI.listAllEvents())
 
+fun updateEvent() {
+    listEvent()
+    if (theatreAPI.numberOfEvents() > 0) {
+        val id = readNextInt("Enter the id of the note to update: ")
+        if (theatreAPI.findEvent(id) != null) {
+            val eventTitle = readNextLine("Enter a Title for the Event: ")
+            val eventCategory = readNextLine("Enter a Category for the Event: ")
+            val eventDescription = readNextLine("Enter Description of the Event: ")
+            val ageRating = readNextInt("Enter Age Rating for Event: ")
+            val ticketPrice = readNextInt("Enter Price for a ticket for the Event: ")
+            val eventDuration = readNextInt("Enter Duration of the Event: ")
+
+
+            // pass the index of the note and the new note details to NoteAPI for updating and check for success.
+            if (theatreAPI.update(id, Event(0, eventTitle, eventCategory, eventDescription, ageRating, ticketPrice, eventDuration)){
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+            }
+        } else {
+            println("There are no notes for this index number")
+        }
+    }
+}
 
 
