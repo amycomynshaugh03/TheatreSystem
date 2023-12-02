@@ -131,7 +131,7 @@ private fun addBookingToEvent() {
 fun updateBookingContentsInEvent() {
     val event: Event? = askUserToChooseActiveEvent()
     if (event != null) {
-        val booking: Booking? = askUserToChooseBooking(Event)
+        val booking: Booking? = askUserToChooseBooking(event)
         if (booking != null) {
             val newContents = readNextLine("Enter new contents: ")
             if (event.update(booking.bookingId, Booking(bookingContents = newContents))) {
@@ -148,13 +148,33 @@ fun updateBookingContentsInEvent() {
 fun deleteBooking(){
     val event: Event? = askUserToChooseActiveEvent()
     if (event != null) {
-        val event: Event? = askUserToChooseBooking(Event)
+        val event: Event? = askUserToChooseBooking(event)
         if (booking != null) {
             val isDeleted = event.delete(booking.bookingId)
             if (isDeleted) {
                 println("Delete Successful!")
             } else {
                 println("Delete NOT Successful")
+            }
+        }
+    }
+}
+
+fun markPaymentStatus() {
+    val event: Event? = askUserToChooseActiveEvent()
+    if (event != null) {
+        val booking: Booking? = askUserToChooseBooking(event)
+        if (booking != null) {
+            var changeStatus = 'X'
+            if (booking.isBookingComplete) {
+                changeStatus = readNextChar("The Booking is currently complete...do you want to mark it as paid?")
+                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                    booking.isBookingComplete = false
+            }
+            else {
+                changeStatus = readNextChar("The Booking is currently unpaid...do you want to mark it as unpaid?")
+                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                    booking.isBookingComplete = true
             }
         }
     }
