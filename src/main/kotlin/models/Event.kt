@@ -30,4 +30,8 @@ data class Event( var eventId: Int = 0,
         }
         return false
     }
+
+    fun delete(id: Int): Boolean {
+        return booking.removeIf { booking -> booking.bookingId == id}
+    }
 }
