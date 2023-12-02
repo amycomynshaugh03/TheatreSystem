@@ -21,5 +21,13 @@ data class Event( var eventId: Int = 0,
         return booking.find{ booking -> booking.bookingId == id}
     }
 
-    
+    fun update(id: Int, newBooking: Booking): Boolean {
+        val foundBooking = findOne(id)
+        if (foundBooking != null) {
+            foundBooking.bookingContents = newBooking.bookingContents
+            foundBooking.isPaymentComplete = newBooking.isPaymentComplete
+            return true
+        }
+        return false
+    }
 }
