@@ -128,4 +128,20 @@ private fun addBookingToEvent() {
     }
 }
 
+fun updateBookingContentsInEvent() {
+    val event: Event? = askUserToChooseActiveEvent()
+    if (event != null) {
+        val booking: Booking? = askUserToChooseBooking(Event)
+        if (booking != null) {
+            val newContents = readNextLine("Enter new contents: ")
+            if (event.update(booking.bookingId, Booking(bookingContents = newContents))) {
+                println("Booking contents updated")
+            } else {
+                println("Booking contents NOT updated")
+            }
+        } else {
+            println("Invalid Booking Id")
+        }
+    }
+}
 
