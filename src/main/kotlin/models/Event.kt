@@ -51,4 +51,9 @@ data class Event( var eventId: Int = 0,
     fun listBooking() =
         if(booking.isEmpty()) "\t No Bookings Added"
         else Utilities.formatSetString(booking)
+
+    override fun toString(): String {
+        val archived = if (isEventArchived) 'Y' else 'N'
+        return "$eventId: $eventTitle, Category($eventCategory), Description ($eventDuration), Age Rating ($ageRating), Ticket Price ($ticketPrice), Duration ($eventDuration), Archived($archived) \n ${listBooking()}"
+    }
 }
