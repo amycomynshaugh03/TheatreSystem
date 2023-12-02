@@ -244,7 +244,35 @@ fun searchEvents() {
     }
 }
 
-fun searchAllEvents() = println(theatreAPI.searchAllEvents())
-fun searchEventsByCategory() = println(theatreAPI.searchEventsByCategory())
-fun searchEventsByDuration() = println(theatreAPI.searchEventsByDuration())
+fun searchAllEvents() {
+    val searchTitle = readNextLine("Enter the description to search by: ")
+    val searchResults = theatreAPI.searchAllEvents(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchEventsByCategory(){
+    val searchTitle = readNextLine("Enter the category to search by: ")
+    val searchResults = theatreAPI.searchEventsByCategory(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchEventsByDuration()
+{
+    val searchTitle = readNextInt("Enter the duration to search by: ")
+    val searchResults = theatreAPI.searchEventsByDuration(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
 fun searchEventsByTicketPrice() = println(theatreAPI.searchEventsByTicketPrice())

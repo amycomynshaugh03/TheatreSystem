@@ -55,6 +55,11 @@ fun searchAllEvents(searchString: String) =
             events.filter { event -> event.eventCategory.contains(searchString, ignoreCase = true)}
         )
 
+    fun searchEventsByDuration(searchValue: Int): String =
+        formatSearchString(
+            events.filter { event -> event.eventDuration == searchValue}
+        )
+
 
 
 
