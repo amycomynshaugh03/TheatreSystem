@@ -243,3 +243,8 @@ fun searchEvents() {
         println("Option Invalid - No Events Stored")
     }
 }
+
+fun searchAllEvents() = println(theatreAPI.searchAllEvents())
+fun searchEventsByCategory() = println(theatreAPI.searchEventsByCategory())
+fun searchEventsByDuration() = println(theatreAPI.searchEventsByDuration())
+fun searchEventsByTicketPrice() = println(theatreAPI.searchEventsByTicketPrice())
