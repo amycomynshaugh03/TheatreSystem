@@ -47,4 +47,8 @@ data class Event( var eventId: Int = 0,
         }
         return true
     }
+
+    fun listBooking() =
+        if(booking.isEmpty()) "\t No Bookings Added"
+        else Utilities.formatSetString(booking)
 }
