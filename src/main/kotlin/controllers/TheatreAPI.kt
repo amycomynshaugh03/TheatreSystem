@@ -3,6 +3,7 @@ package controllers
 import models.Booking
 import models.Event
 import utils.Utilities.formatListString
+import utils.Utilities.formatSearchString
 import java.util.ArrayList
 class TheatreAPI() {
     private var events = ArrayList<Event>()
@@ -43,7 +44,26 @@ class TheatreAPI() {
     fun findEvent(eventId: Int) = events.find{ events -> events.eventId == eventId}
 
 
+//Search Events Functions
+fun searchAllEvents(searchString: String) =
+    formatSearchString(
+        events.filter { event -> event.eventTitle.contains(searchString, ignoreCase = true)}
+    )
 
+    fun searchEventsByCategory(searchString: String) =
+        formatSearchString(
+            events.filter { event -> event.eventCategory.contains(searchString, ignoreCase = true)}
+        )
+
+    fun searchEventsByDuration(searchValue: Int): String =
+        formatSearchString(
+            events.filter { event -> event.eventDuration == searchValue}
+        )
+
+    fun searchEventsByTicketPrice(searchValue: Int): String =
+        formatSearchString(
+            events.filter { event -> event.ticketPrice== searchValue}
+        )
 
 
 

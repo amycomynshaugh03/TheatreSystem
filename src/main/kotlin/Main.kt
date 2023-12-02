@@ -193,6 +193,7 @@ fun markPaymentStatus() {
     }
 }
 
+//Helper Functions
 private fun askUserToChooseEvent(): Event? {
     listEvent()
     if (theatreAPI.numberOfEvents() > 0) {
@@ -214,5 +215,72 @@ private fun askUserToChooseBooking(event: Event): Booking? {
     else{
         println ("No Booking for chosen note")
         return null
+    }
+}
+
+//Event - Search Functions
+fun searchEvents() {
+    if(theatreAPI.numberOfEvents() > 0) {
+        val option = readNextInt(
+            """
+                  > ----------------------------------------
+                  > |   1 -> Search ALL Events             |
+                  > |   2 -> Search Events by Category     |
+                  > |   3 -> Search Events by Duration     |
+                  > |   4 -> Search Events by Ticket Price |
+                  > ----------------------------------------
+         > ==>> """.trimMargin(">")
+        )
+
+        when (option) {
+            1 -> searchAllEvents()
+            2 -> searchEventsByCategory()
+            3 -> searchEventsByDuration()
+            4 -> searchEventsByTicketPrice()
+            else -> println("Invalid option entered: $option")
+        }
+    } else {
+        println("Option Invalid - No Events Stored")
+    }
+}
+
+fun searchAllEvents() {
+    val searchTitle = readNextLine("Enter the description to search by: ")
+    val searchResults = theatreAPI.searchAllEvents(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchEventsByCategory(){
+    val searchTitle = readNextLine("Enter the category to search by: ")
+    val searchResults = theatreAPI.searchEventsByCategory(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchEventsByDuration()
+{
+    val searchTitle = readNextInt("Enter the duration to search by: ")
+    val searchResults = theatreAPI.searchEventsByDuration(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchEventsByTicketPrice() {
+    val searchTitle = readNextInt("Enter the ticket price to search by: ")
+    val searchResults = theatreAPI.searchEventsByTicketPrice(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
     }
 }
