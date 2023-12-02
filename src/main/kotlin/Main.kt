@@ -19,7 +19,7 @@ fun runMenu() {
             6 -> addBookingToEvent()
             7 -> updateBookingContentsInEvent()
             8 -> deleteBooking()
-            9 -> markItemStatus()
+            9 -> markPaymentStatus()
             10 -> searchEvents()
             15 -> searchBooking()
             0 -> exitApp()
@@ -27,5 +27,39 @@ fun runMenu() {
         }
     } while (true)
 }
+
+fun mainMenu() = readNextInt(
+    """ 
+         > -----------------------------------------------------  
+         > |      Welcome to Waterford's Theatre System        |
+         > -----------------------------------------------------  
+         > |                -EVENT MENU-                       |
+         > |   1 -> Add an Event                               |
+         > |   2 -> List Events                                |
+         > |   3 -> Update an Event                            |
+         > |   4 -> Delete an Event                            |
+         > |   5 -> Archive an Event                           |
+         > |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| 
+         > |               -BOOKING MENU-                      | 
+         > |   6 -> Add Booking to an Event                    |
+         > |   7 -> Update Booking contents on an Event        |
+         > |   8 -> Delete Booking from an Event               |
+         > |   9 -> Mark Booking as Paid or Unpaid             | 
+         > |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| 
+         > |          -REPORT MENU FOR EVENTS-                 | 
+         > |   10 -> Search for all Events                     |
+         > |   11 -> Search by Event Category                  |
+         > |   12 -> Search by Duration                        |
+         > |   13 -> Search by Ticket Price                    |
+         > |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| 
+         > |          -REPORT MENU FOR BOOKINGS-               |                                
+         > |   14 -> Search for all Bookings                   |
+         > |   15 -> Search by Payment Status                  |
+         > |   16 -> Search Booking by Date                    |
+         > -----------------------------------------------------  
+         > |   0) Exit                                         |
+         > -----------------------------------------------------  
+         > ==>> """.trimMargin(">")
+)
 
 
