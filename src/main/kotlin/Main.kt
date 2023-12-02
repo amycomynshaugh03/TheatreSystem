@@ -62,4 +62,23 @@ fun mainMenu() = readNextInt(
          > ==>> """.trimMargin(">")
 )
 
+//Event CRUD
+fun addEvent() {
+    val eventId = readNextInt("Enter an Event ID for the Event: ")
+    val eventTitle = readNextLine("Enter a Title for the Event: ")
+    val eventCategory = readNextLine("Enter a Category for the Event: ")
+    val eventDescription = readNextLine("Enter Description of the Event: ")
+    val ageRating = readNextInt("Enter Age Rating for Event: ")
+    val ticketPrice = readNextInt("Enter Price for a ticket for the Event: ")
+    val eventDuration = readNextInt("Enter Duration of the Event: ")
+
+    val isAdded = theatreAPI.add(Event(eventId = eventId, eventTitle = eventTitle, eventCategory = eventCategory, eventDescription = eventDescription, ageRating = ageRating, ticketPrice = ticketPrice, eventDuration = eventDuration))
+
+    if (isAdded) {
+        println("Added Successfully")
+    } else {
+        println("Add Failed")
+    }
+}
+
 
