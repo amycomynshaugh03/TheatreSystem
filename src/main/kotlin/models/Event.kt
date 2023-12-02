@@ -1,5 +1,7 @@
 package models
 
+import utils.Utilities
+
 data class Event( var eventId: Int = 0,
                   var eventTitle: String,
                   var eventCategory: String,
@@ -33,5 +35,16 @@ data class Event( var eventId: Int = 0,
 
     fun delete(id: Int): Boolean {
         return booking.removeIf { booking -> booking.bookingId == id}
+    }
+
+    fun checkPaymentStatus(): Boolean {
+        if (booking.isNotEmpty()) {
+            for (booking in booking) {
+                if (!booking.isPaymentComplete){
+                    return false
+                }
+            }
+        }
+        return true
     }
 }
