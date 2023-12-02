@@ -120,7 +120,7 @@ fun deleteEvent() {
 
 //Booking CRUD
 private fun addBookingToEvent() {
-    val event: Event? = askUserToChooseActiveEvent()
+    val event: Event? = askUserToChooseEvent()
     if (event != null ) {
         if (event.addBooking(Booking(bookingContents = readNextLine("\t Booking Contents: "))))
             println("Add Successful!")
@@ -129,7 +129,7 @@ private fun addBookingToEvent() {
 }
 
 fun updateBookingContentsInEvent() {
-    val event: Event? = askUserToChooseActiveEvent()
+    val event: Event? = askUserToChooseEvent()
     if (event != null) {
         val booking: Booking? = askUserToChooseBooking(event)
         if (booking != null) {
@@ -146,7 +146,7 @@ fun updateBookingContentsInEvent() {
 }
 
 fun deleteBooking(){
-    val event: Event? = askUserToChooseActiveEvent()
+    val event: Event? = askUserToChooseEvent()
     if (event != null) {
         val event: Event? = askUserToChooseBooking(event)
         if (booking != null) {
@@ -161,21 +161,34 @@ fun deleteBooking(){
 }
 
 fun markPaymentStatus() {
-    val event: Event? = askUserToChooseActiveEvent()
+    val event: Event? = askUserToChooseEvent()
     if (event != null) {
         val booking: Booking? = askUserToChooseBooking(event)
         if (booking != null) {
             var changeStatus = 'X'
-            if (booking.isBookingComplete) {
+            if (booking.isPaymentComplete) {
                 changeStatus = readNextChar("The Booking is currently complete...do you want to mark it as paid?")
                 if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
-                    booking.isBookingComplete = false
+                    booking.isPaymentComplete = false
             }
             else {
                 changeStatus = readNextChar("The Booking is currently unpaid...do you want to mark it as unpaid?")
                 if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
-                    booking.isBookingComplete = true
+                    booking.isPaymentComplete = true
             }
         }
     }
+}
+
+private fun askUserToChooseEvent(): Event? {
+    listEvent()
+    if (TheatreAPI.numberOfEvents() > 0) {
+        val event = TheatreAPI.findEvent(readNextInt("\nEnter the id of the note: "))
+        if (event != null) {
+            return event
+        } else {
+                println("Event id is not valid")
+            }
+        }
+    return null
 }
