@@ -118,4 +118,14 @@ fun deleteEvent() {
     }
 }
 
+//Booking CRUD
+private fun addBookingToEvent() {
+    val event: Event? = askUserToChooseActiveEvent()
+    if (event != null ) {
+        if (event.addBooking(Booking(bookingContents = readNextLine("\t Booking Contents: "))))
+            println("Add Successful!")
+        else println("Add NOT Successful")
+    }
+}
+
 
