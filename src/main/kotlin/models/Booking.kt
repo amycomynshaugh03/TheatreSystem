@@ -8,14 +8,13 @@ data class Booking(var bookingId: Int = 0,
                    var customerPhone: Int = 0,
                    var paymentMethod: String,
                    var paymentStatus: String,
-                   var bookingContents: String,
                    var isPaymentComplete: Boolean = false
 ) {
     override fun toString(): String {
         if (isPaymentComplete)
-            return "$bookingId: $bookingContents (Paid)"
+            return "$bookingId: $customerName (Paid)"
         else
-            return "$bookingId: $bookingContents (Unpaid)"
+            return "$bookingId: $customerName (Unpaid)"
     }
 
 

@@ -14,9 +14,9 @@ data class Event( var eventId: Int = 0,
     private var lastBookingId = 0
     private fun getBookingId() = lastBookingId++
 
-    fun addBooking( booking: Booking) : Boolean {
-        booking.bookingId = getBookingId()
-        return booking.add(booking)
+    fun addBooking( bookings: Booking) : Boolean {
+        bookings.bookingId = getBookingId()
+        return booking.add(bookings)
     }
     fun numberOfBookings() = booking.size
     fun findOne(id: Int): Booking?{
@@ -26,8 +26,12 @@ data class Event( var eventId: Int = 0,
     fun update(id: Int, newBooking: Booking): Boolean {
         val foundBooking = findOne(id)
         if (foundBooking != null) {
-            foundBooking.bookingContents = newBooking.bookingContents
-            foundBooking.isPaymentComplete = newBooking.isPaymentComplete
+            foundBooking.bookingDate = newBooking.bookingDate
+            foundBooking.bookingTime = newBooking.bookingTime
+            foundBooking.customerName = newBooking.customerName
+            foundBooking.customerPhone = newBooking.customerPhone
+            foundBooking.paymentMethod = newBooking.paymentMethod
+            foundBooking.paymentStatus = newBooking.paymentStatus
             return true
         }
         return false
@@ -53,7 +57,6 @@ data class Event( var eventId: Int = 0,
         else Utilities.formatSetString(booking)
 
     override fun toString(): String {
-        val archived = if (isEventArchived) 'Y' else 'N'
-        return "$eventId: $eventTitle, Category($eventCategory), Description ($eventDuration), Age Rating ($ageRating), Ticket Price ($ticketPrice), Duration ($eventDuration), Archived($archived) \n ${listBooking()}"
+        return "$eventId: $eventTitle, Category($eventCategory), Description ($eventDuration), Age Rating ($ageRating), Ticket Price ($ticketPrice), Duration ($eventDuration),\n ${listBooking()}"
     }
 }
