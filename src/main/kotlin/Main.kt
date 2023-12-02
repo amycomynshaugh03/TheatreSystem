@@ -62,4 +62,60 @@ fun mainMenu() = readNextInt(
          > ==>> """.trimMargin(">")
 )
 
+//Event CRUD
+fun addEvent() {
+    val eventTitle = readNextLine("Enter a Title for the Event: ")
+    val eventCategory = readNextLine("Enter a Category for the Event: ")
+    val eventDescription = readNextLine("Enter Description of the Event: ")
+    val ageRating = readNextInt("Enter Age Rating for Event: ")
+    val ticketPrice = readNextInt("Enter Price for a ticket for the Event: ")
+    val eventDuration = readNextInt("Enter Duration of the Event: ")
+
+    val isAdded = theatreAPI.add(Event( eventTitle = eventTitle, eventCategory = eventCategory, eventDescription = eventDescription, ageRating = ageRating, ticketPrice = ticketPrice, eventDuration = eventDuration))
+
+    if (isAdded) {
+        println("Added Successfully")
+    } else {
+        println("Add Failed")
+    }
+}
+
+fun listEvent() = println(theatreAPI.listAllEvents())
+
+fun updateEvent() {
+    listEvent()
+    if (theatreAPI.numberOfEvents() > 0) {
+        val id = readNextInt("Enter the id of the note to update: ")
+        if (theatreAPI.findEvent(id) != null) {
+            val eventTitle = readNextLine("Enter a Title for the Event: ")
+            val eventCategory = readNextLine("Enter a Category for the Event: ")
+            val eventDescription = readNextLine("Enter Description of the Event: ")
+            val ageRating = readNextInt("Enter Age Rating for Event: ")
+            val ticketPrice = readNextInt("Enter Price for a ticket for the Event: ")
+            val eventDuration = readNextInt("Enter Duration of the Event: ")
+
+            if (theatreAPI.update(id, Event(0, eventTitle, eventCategory, eventDescription, ageRating, ticketPrice, eventDuration))) {
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+            }
+        } else {
+            println("There are no notes for this index number")
+        }
+    }
+}
+
+fun deleteEvent() {
+    listEvent()
+    if (theatreAPI.numberOfEvents() > 0) {
+        val id = readNextInt("Enter the id of the note to delete: ")
+        val noteToDelete = theatreAPI.delete(id)
+        if (noteToDelete) {
+            println("Delete Successful!")
+        } else {
+            println("Delete NOT Successful")
+        }
+    }
+}
+
 
