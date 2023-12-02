@@ -60,6 +60,11 @@ fun searchAllEvents(searchString: String) =
             events.filter { event -> event.eventDuration == searchValue}
         )
 
+    fun searchEventsByTicketPrice(searchValue: Int): String =
+        formatSearchString(
+            events.filter { event -> event.ticketPrice== searchValue}
+        )
+
 
 
 

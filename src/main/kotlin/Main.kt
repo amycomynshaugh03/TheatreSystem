@@ -275,4 +275,12 @@ fun searchEventsByDuration()
     }
 }
 
-fun searchEventsByTicketPrice() = println(theatreAPI.searchEventsByTicketPrice())
+fun searchEventsByTicketPrice() {
+    val searchTitle = readNextInt("Enter the ticket price to search by: ")
+    val searchResults = theatreAPI.searchEventsByTicketPrice(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
