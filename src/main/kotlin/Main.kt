@@ -148,7 +148,7 @@ fun updateBookingContentsInEvent() {
 fun deleteBooking(){
     val event: Event? = askUserToChooseEvent()
     if (event != null) {
-        val event: Event? = askUserToChooseBooking(event)
+        val booking: Booking? = askUserToChooseBooking(event)
         if (booking != null) {
             val isDeleted = event.delete(booking.bookingId)
             if (isDeleted) {
@@ -182,8 +182,8 @@ fun markPaymentStatus() {
 
 private fun askUserToChooseEvent(): Event? {
     listEvent()
-    if (TheatreAPI.numberOfEvents() > 0) {
-        val event = TheatreAPI.findEvent(readNextInt("\nEnter the id of the note: "))
+    if (theatreAPI.numberOfEvents() > 0) {
+        val event = theatreAPI.findEvent(readNextInt("\nEnter the id of the note: "))
         if (event != null) {
             return event
         } else {
@@ -191,4 +191,15 @@ private fun askUserToChooseEvent(): Event? {
             }
         }
     return null
+}
+
+private fun askUserToChooseBooking(event: Event): Booking? {
+    if (event.numberOfBookings() > 0) {
+        print(event.listBooking())
+        return event.findOne(readNextInt("\nEnter the id of the Booking: "))
+    }
+    else{
+        println ("No Booking for chosen note")
+        return null
+    }
 }
