@@ -16,4 +16,10 @@ data class Event( var eventId: Int = 0,
         booking.bookingId = getBookingId()
         return booking.add(booking)
     }
+    fun numberOfBookings() = booking.size
+    fun findOne(id: Int): Booking?{
+        return booking.find{ booking -> booking.bookingId == id}
+    }
+
+    
 }
