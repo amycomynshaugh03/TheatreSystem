@@ -50,6 +50,11 @@ fun searchAllEvents(searchString: String) =
         events.filter { event -> event.eventTitle.contains(searchString, ignoreCase = true)}
     )
 
+    fun searchEventsByCategory(searchString: String) =
+        formatSearchString(
+            events.filter { event -> event.eventCategory.contains(searchString, ignoreCase = true)}
+        )
+
 
 
 
