@@ -118,4 +118,103 @@ fun deleteEvent() {
     }
 }
 
+//Booking CRUD
+private fun addBookingToEvent() {
+    val event: Event? = askUserToChooseEvent()
+    if (event != null ) {
+        val bookingPerformance = readNextLine(" Enter Booking Performance: ")
+        val bookingDate = readNextLine("Enter Booking Date: ")
+        val bookingTime = readNextLine("Enter Booking Time: ")
+        val customerName = readNextLine("Enter Customer Name: ")
+        val customerPhone = readNextInt("Enter Customer Phone Number: ")
+        val paymentMethod = readNextLine("Enter a Payment Method: ")
+        val paymentStatus = readNextLine("Enter a Payment Status: ")
+        val booking = Booking(bookingPerformance = bookingPerformance, bookingDate = bookingDate,bookingTime = bookingTime, customerName = customerName, customerPhone = customerPhone, paymentMethod = paymentMethod, paymentStatus = paymentStatus)
+        if (event.addBooking(booking))
+            println("Add Successful!")
+        else println("Add NOT Successful")
+    }
+}
 
+fun updateBookingContentsInEvent() {
+    val event: Event? = askUserToChooseEvent()
+    if (event != null) {
+        val booking: Booking? = askUserToChooseBooking(event)
+        if (booking != null) {
+            val newBookingPerformance = readNextLine(" Enter a new Booking Performance: ")
+            val newBookingDate = readNextLine("Enter a new Booking Date: ")
+            val newBookingTime = readNextLine("Enter a new Booking Time: ")
+            val newCustomerName = readNextLine("Enter a new Customer Name: ")
+            val newCustomerPhone = readNextInt("Enter new Customer Phone Number: ")
+            val newPaymentMethod = readNextLine("Enter a new Payment Method: ")
+            val newPaymentStatus = readNextLine("Enter a new Payment Status: ")
+            if (event.update(booking.bookingId, Booking(bookingPerformance = newBookingPerformance, bookingDate = newBookingDate,bookingTime = newBookingTime,
+                    customerName = newCustomerName, customerPhone = newCustomerPhone, paymentMethod = newPaymentMethod, paymentStatus = newPaymentStatus ))) {
+                println("Booking contents updated")
+            } else {
+                println("Booking contents NOT updated")
+            }
+        } else {
+            println("Invalid Booking Id")
+        }
+    }
+}
+
+fun deleteBooking(){
+    val event: Event? = askUserToChooseEvent()
+    if (event != null) {
+        val booking: Booking? = askUserToChooseBooking(event)
+        if (booking != null) {
+            val isDeleted = event.delete(booking.bookingId)
+            if (isDeleted) {
+                println("Delete Successful!")
+            } else {
+                println("Delete NOT Successful")
+            }
+        }
+    }
+}
+
+fun markPaymentStatus() {
+    val event: Event? = askUserToChooseEvent()
+    if (event != null) {
+        val booking: Booking? = askUserToChooseBooking(event)
+        if (booking != null) {
+            var changeStatus = 'X'
+            if (booking.isPaymentComplete) {
+                changeStatus = readNextChar("The Booking is currently complete...do you want to mark it as paid?")
+                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                    booking.isPaymentComplete = false
+            }
+            else {
+                changeStatus = readNextChar("The Booking is currently unpaid...do you want to mark it as unpaid?")
+                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                    booking.isPaymentComplete = true
+            }
+        }
+    }
+}
+
+private fun askUserToChooseEvent(): Event? {
+    listEvent()
+    if (theatreAPI.numberOfEvents() > 0) {
+        val event = theatreAPI.findEvent(readNextInt("\nEnter the id of the note: "))
+        if (event != null) {
+            return event
+        } else {
+                println("Event id is not valid")
+            }
+        }
+    return null
+}
+
+private fun askUserToChooseBooking(event: Event): Booking? {
+    if (event.numberOfBookings() > 0) {
+        print(event.listBooking())
+        return event.findOne(readNextInt("\nEnter the id of the Booking: "))
+    }
+    else{
+        println ("No Booking for chosen note")
+        return null
+    }
+}
