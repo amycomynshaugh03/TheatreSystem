@@ -45,15 +45,10 @@ fun mainMenu() = readNextInt(
          > |   8 -> Mark Booking as Paid or Unpaid             | 
          > |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| 
          > |          -REPORT MENU FOR EVENTS-                 | 
-         > |   9 -> Search for all Events                     |
-         > |   10 -> Search by Event Category                  |
-         > |   11 -> Search by Duration                        |
-         > |   12 -> Search by Ticket Price                    |
+         > |   9 -> Search for all Events                      |
          > |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| 
          > |          -REPORT MENU FOR BOOKINGS-               |                                
-         > |   13 -> Search for all Bookings                   |
-         > |   14 -> Search by Payment Status                  |
-         > |   15 -> Search Booking by Date                    |
+         > |   10 -> Search for all Bookings                   |
          > -----------------------------------------------------  
          > |   0) Exit                                         |
          > -----------------------------------------------------  
