@@ -145,3 +145,17 @@ fun updateBookingContentsInEvent() {
     }
 }
 
+fun deleteBooking(){
+    val event: Event? = askUserToChooseActiveEvent()
+    if (event != null) {
+        val event: Event? = askUserToChooseBooking(Event)
+        if (booking != null) {
+            val isDeleted = event.delete(booking.bookingId)
+            if (isDeleted) {
+                println("Delete Successful!")
+            } else {
+                println("Delete NOT Successful")
+            }
+        }
+    }
+}
