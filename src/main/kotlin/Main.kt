@@ -94,9 +94,7 @@ fun updateEvent() {
             val ticketPrice = readNextInt("Enter Price for a ticket for the Event: ")
             val eventDuration = readNextInt("Enter Duration of the Event: ")
 
-
-            // pass the index of the note and the new note details to NoteAPI for updating and check for success.
-            if (theatreAPI.update(id, Event(0, eventTitle, eventCategory, eventDescription, ageRating, ticketPrice, eventDuration)){
+            if (theatreAPI.update(id, Event(0, eventTitle, eventCategory, eventDescription, ageRating, ticketPrice, eventDuration))) {
                 println("Update Successful")
             } else {
                 println("Update Failed")
