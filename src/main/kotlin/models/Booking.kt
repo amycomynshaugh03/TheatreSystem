@@ -1,11 +1,11 @@
 package models
 
 data class Booking(var bookingId: Int = 0,
-                   var bookingDate: String,
-                   var bookingTime: String,
-                   var customerName: String,
+                   var bookingDate: String = "Unavailable",
+                   var bookingTime: String = "Unavailable",
+                   var customerName: String = "Unavailable",
                    var customerPhone: Int = 0,
-                   var paymentMethod: String,
+                   var paymentMethod: String = "Unavailable",
                    var isPaymentComplete: Boolean = false
 ) {
     override fun toString(): String {

@@ -3,9 +3,9 @@ package models
 import utils.Utilities
 
 data class Event( var eventId: Int = 0,
-                  var eventTitle: String,
-                  var eventCategory: String,
-                  var eventDescription: String,
+                  var eventTitle: String = "Unavailable",
+                  var eventCategory: String = "Unavailable",
+                  var eventDescription: String = "Unavailable",
                   var ageRating: Int = 0,
                   var ticketPrice: Int = 0,
                   var eventDuration: Int = 0,
