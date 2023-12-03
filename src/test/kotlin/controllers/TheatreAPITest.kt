@@ -61,6 +61,25 @@ fun setup() {
         }
     }
 
+    @Nested
+    inner class ListNotes {
+
+        @Test
+        fun `listAllEvents returns No Events Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyEvents!!.numberOfEvents())
+            assertTrue(emptyEvents!!.listAllEvents().lowercase().contains("no notes"))
+        }
+
+        @Test
+        fun `listAllEvents returns Events when ArrayList has notes stored`() {
+            assertEquals(4, populatedEvents!!.numberOfEvents())
+            val eventsString = populatedEvents!!.listAllEvents().lowercase()
+            assertTrue(eventsString.contains("Variations", ignoreCase = true))
+            assertTrue(eventsString.contains("Shrek the Musical", ignoreCase = true))
+            assertTrue(eventsString.contains("Maltida", ignoreCase = true))
+            assertTrue(eventsString.contains("Talent Show", ignoreCase = true))
+        }
+    }
 
 
 
@@ -72,4 +91,5 @@ fun setup() {
 
 
 
-}
+
+    }
