@@ -10,10 +10,9 @@ import utils.ScannerInput.readNextLine
 import java.io.File
 import kotlin.system.exitProcess
 
-private val theatreAPI = TheatreAPI()
 
 //private val noteAPI = TheatreAPI(XMLSerializer(File("notes.xml")))
-private val noteAPI = TheatreAPI(JSONSerializer(File("notes.json")))
+private val theatreAPI = TheatreAPI(JSONSerializer(File("notes.json")))
 //private val noteAPI = TheatreAPI(YAMLSerializer(File("notes.yaml")))
 fun main() = runMenu()
 
