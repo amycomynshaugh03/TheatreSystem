@@ -2,10 +2,13 @@ package controllers
 
 import models.Booking
 import models.Event
+import persistence.Serializer
 import utils.Utilities.formatListString
 import utils.Utilities.formatSearchString
 import java.util.ArrayList
-class TheatreAPI() {
+class TheatreAPI(serializerType : Serializer) {
+    private var serializer: Serializer = serializerType
+
     private var events = ArrayList<Event>()
     private var lastId = 0
     private fun getId() = lastId++
@@ -95,6 +98,11 @@ fun searchAllEvents(searchString: String) =
             if (listOfEvent == "") "No bookings found for: $searchString"
             else listOfEvent
         }
+    }
+
+    @Throws(Exception::class)
+    fun load() {
+        events = serializer.read() as ArrayList<Event>
     }
 
 
