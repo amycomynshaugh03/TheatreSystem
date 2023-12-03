@@ -301,3 +301,11 @@ fun searchBooking() {
         println("Option Invalid - No Bookings Stored")
     }
 }
+
+fun searchAllBookings() {
+    val event: Event = askUserToChooseEvent()
+    if (event != null) {
+        val searchResults = event.searchAllBookings()
+        println(searchResults)
+    }
+}
