@@ -23,7 +23,7 @@ fun runMenu() {
             8 -> markPaymentStatus()
             9 -> searchEvents()
             10 -> searchBooking()
-           // 0 -> exitApp()
+            0 -> exitApp()
             else -> println("Invalid menu choice: $option")
         }
     } while (true)
@@ -318,4 +318,9 @@ fun searchBookingsByDate() {
     } else {
         println(searchResults)
     }
+}
+
+fun exitApp() {
+    println("Exiting...bye :) ")
+    exitProcess(0)
 }
