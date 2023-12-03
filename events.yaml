@@ -1,0 +1,12 @@
+- !!models.Event
+  ageRating: 13
+  booking: !!set
+    ? {bookingDate: 01-03-2024, bookingId: 0, bookingTime: 6pm, customerName: Amy,
+      customerPhone: 874327667, paymentComplete: false, paymentMethod: Card}
+    : null
+  eventCategory: Comedy
+  eventDescription: Breakfast and family drama
+  eventDuration: 60
+  eventId: 0
+  eventTitle: Variations
+  ticketPrice: 10

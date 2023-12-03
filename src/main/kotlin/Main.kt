@@ -1,14 +1,22 @@
 import controllers.TheatreAPI
 import models.Event
 import models.Booking
+import persistence.*
 import utils.ScannerInput.readNextChar
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import java.io.File
 import kotlin.system.exitProcess
 
-private val theatreAPI = TheatreAPI()
 
-fun main() = runMenu()
+//private val theatreAPI = TheatreAPI(XMLSerializer(File("events.xml")))
+//private val theatreAPI = TheatreAPI(JSONSerializer(File("events.json")))
+private val theatreAPI = TheatreAPI(YAMLSerializer(File("events.yaml")))
+
+fun main(args: Array<String>)  {
+
+    runMenu()
+}
 
 fun runMenu() {
     do {
@@ -23,6 +31,8 @@ fun runMenu() {
             8 -> markPaymentStatus()
             9 -> searchEvents()
             10 -> searchBooking()
+            20 -> save()
+            21 -> load()
             0 -> exitApp()
             else -> println("Invalid menu choice: $option")
         }
@@ -51,6 +61,9 @@ fun mainMenu() = readNextInt(
          > |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| 
          > |          -REPORT MENU FOR BOOKINGS-               |                                
          > |   10 -> Search for all Bookings                   |
+         > |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         > |    20 -> Save Event                               |
+         > |    21 -> Load Event                               |
          > -----------------------------------------------------  
          > |   0) Exit                                         |
          > -----------------------------------------------------  
@@ -323,4 +336,23 @@ fun searchBookingsByDate() {
 fun exitApp() {
     println("Exiting...bye :) ")
     exitProcess(0)
+}
+
+fun save() {
+    try {
+        theatreAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+/**
+ * Loads notes from a file.
+ */
+fun load() {
+    try {
+        theatreAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
 }
