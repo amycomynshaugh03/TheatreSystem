@@ -85,7 +85,7 @@ class TheatreAPITest {
      * Nested tests for listing events in the TheatreAPI.
      */
     @Nested
-    inner class ListNotes {
+    inner class ListEvents {
 
         /**
          * Test listing all events when ArrayList is empty.
