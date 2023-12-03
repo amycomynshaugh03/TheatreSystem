@@ -239,6 +239,28 @@ fun setup() {
             assertFalse(searchResults.contains("Maltida"))
         }
 
+        @Test
+        fun `search event by duration return duration event when no event with that duration exist`() {
+            assertEquals(4, populatedEvents!!.numberOfEvents())
+            val searchResults = populatedEvents!!.searchEventsByDuration(0)
+            assertTrue(searchResults.isEmpty())
+
+            assertEquals(0, emptyEvents!!.numberOfEvents())
+            assertTrue(emptyEvents!!.searchEventsByDuration(0).isEmpty())
+        }
+
+        @Test
+        fun `search events by duration returns events when events with that duration exist`() {
+            assertEquals(4, populatedEvents!!.numberOfEvents())
+
+            var searchResults = populatedEvents!!.searchEventsByDuration(60)
+            assertTrue(searchResults.contains("Variations"))
+            assertTrue(searchResults.contains("Talent Show"))
+            assertFalse(searchResults.contains("Maltida"))
+            assertFalse(searchResults.contains("Shrek the Musical"))
+        }
+
+
 
 
     }
