@@ -1,13 +1,20 @@
 import controllers.TheatreAPI
 import models.Event
 import models.Booking
+import persistence.JSONSerializer
+import persistence.XMLSerializer
+import persistence.YAMLSerializer
 import utils.ScannerInput.readNextChar
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import java.io.File
 import kotlin.system.exitProcess
 
 private val theatreAPI = TheatreAPI()
 
+//private val noteAPI = TheatreAPI(XMLSerializer(File("notes.xml")))
+private val noteAPI = TheatreAPI(JSONSerializer(File("notes.json")))
+//private val noteAPI = TheatreAPI(YAMLSerializer(File("notes.yaml")))
 fun main() = runMenu()
 
 fun runMenu() {
