@@ -34,16 +34,4 @@ object ValidateInput {
      * @param prompt The message displayed to prompt the user for input.
      * @return A valid priority (an integer between 1 and 5) entered by the user.
      */
-    @JvmStatic
-    fun readValidPriority(prompt: String?): Int {
-        var input = readNextInt(prompt)
-        do {
-            if (Utilities.validRange(input, 1, 5))
-                return input
-            else {
-                print("Invalid priority $input. Please try again: ")
-                input = readNextInt(prompt)
-            }
-        } while (true)
-    }
 }

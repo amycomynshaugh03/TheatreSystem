@@ -8,6 +8,8 @@ import kotlin.system.exitProcess
 
 private val theatreAPI = TheatreAPI()
 
+fun main() = runMenu()
+
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
@@ -21,7 +23,7 @@ fun runMenu() {
             8 -> markPaymentStatus()
             9 -> searchEvents()
             10 -> searchBooking()
-            0 -> exitApp()
+           // 0 -> exitApp()
             else -> println("Invalid menu choice: $option")
         }
     } while (true)
@@ -293,8 +295,8 @@ fun searchBooking() {
         )
 
         when (option) {
-            1 -> searchAllBookings()
-            2 -> searchBookingsByPaymentStatus()
+            1 -> searchBookingsByPerformance()
+            //2 -> searchBookingsByPaymentStatus()
             else -> println("Invalid option entered: $option")
         }
     } else {
@@ -302,10 +304,12 @@ fun searchBooking() {
     }
 }
 
-fun searchAllBookings() {
-    val event: Event = askUserToChooseEvent()
-    if (event != null) {
-        val searchResults = event.searchAllBookings()
+fun searchBookingsByPerformance() {
+    val searchBookings = readNextLine("Enter the item contents to search by: ")
+    val searchResults = theatreAPI.searchBookingByPerformance(searchBookings)
+    if (searchResults.isEmpty()) {
+        println("No bookings found")
+    } else {
         println(searchResults)
     }
 }
