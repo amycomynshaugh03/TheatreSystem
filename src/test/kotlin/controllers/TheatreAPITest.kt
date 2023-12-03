@@ -81,6 +81,25 @@ fun setup() {
         }
     }
 
+    @Nested
+    inner class DeleteEvents {
+        @Test
+        fun `deleting a Event that does not exist, returns null`() {
+            assertFalse(emptyEvents!!.deleteEvent(0))
+            assertFalse(populatedEvents!!.deleteEvent(-1))
+            assertFalse(populatedEvents!!.deleteEvent(5))
+        }
+
+        @Test
+        fun `deleting a event that exists delete and returns deleted object`() {
+            assertEquals(4, populatedEvents!!.numberOfEvents())
+            assertTrue(populatedEvents!!.deleteEvent(3))
+            assertEquals(3, populatedEvents!!.numberOfEvents())
+            assertTrue(populatedEvents!!.deleteEvent(0))
+            assertEquals(2, populatedEvents!!.numberOfEvents())
+        }
+    }
+
 
 
 
