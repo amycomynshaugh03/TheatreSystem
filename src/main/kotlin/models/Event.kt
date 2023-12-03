@@ -43,8 +43,8 @@ data class Event( var eventId: Int = 0,
 
     fun checkPaymentStatus(): Boolean {
         if (booking.isNotEmpty()) {
-            for (booking in booking) {
-                if (!booking.isPaymentComplete){
+            for (bookings in booking) {
+                if (!bookings.isPaymentComplete){
                     return false
                 }
             }
@@ -60,3 +60,4 @@ data class Event( var eventId: Int = 0,
         return "$eventId: $eventTitle, Category($eventCategory), Description ($eventDuration), Age Rating ($ageRating), Ticket Price ($ticketPrice), Duration ($eventDuration),\n ${listBooking()}"
     }
 }
+

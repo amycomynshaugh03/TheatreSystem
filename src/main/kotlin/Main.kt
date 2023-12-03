@@ -8,6 +8,8 @@ import kotlin.system.exitProcess
 
 private val theatreAPI = TheatreAPI()
 
+fun main() = runMenu()
+
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
@@ -21,7 +23,7 @@ fun runMenu() {
             8 -> markPaymentStatus()
             9 -> searchEvents()
             10 -> searchBooking()
-            0 -> exitApp()
+           // 0 -> exitApp()
             else -> println("Invalid menu choice: $option")
         }
     } while (true)
@@ -275,6 +277,48 @@ fun searchEventsByTicketPrice() {
     val searchResults = theatreAPI.searchEventsByTicketPrice(searchTitle)
     if (searchResults.isEmpty()) {
         println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
+//Booking Search Function
+fun searchBooking() {
+    if(theatreAPI.numberOfEvents() > 0) {
+        val option = readNextInt(
+            """
+                  > -----------------------------------------------
+                  > |   1 -> Search Bookings by Customer Name     |
+                  > |   2 -> Search Bookings by Date              |
+                  > -----------------------------------------------
+         > ==>> """.trimMargin(">")
+        )
+
+        when (option) {
+            1 -> searchBookingsByCustomerName()
+            2 -> searchBookingsByDate()
+            else -> println("Invalid option entered: $option")
+        }
+    } else {
+        println("Option Invalid - No Bookings Stored")
+    }
+}
+
+fun searchBookingsByCustomerName() {
+    val searchBookings = readNextLine("Enter customer name to search by: ")
+    val searchResults = theatreAPI.searchBookingByCustomerName(searchBookings)
+    if (searchResults.isEmpty()) {
+        println("No bookings found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchBookingsByDate() {
+    val searchBookings = readNextLine("Enter the date to search by: ")
+    val searchResults = theatreAPI.searchBookingByDate(searchBookings)
+    if (searchResults.isEmpty()) {
+        println("No bookings found")
     } else {
         println(searchResults)
     }
