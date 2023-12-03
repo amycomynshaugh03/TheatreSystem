@@ -344,3 +344,14 @@ fun save() {
         System.err.println("Error writing to file: $e")
     }
 }
+
+/**
+ * Loads notes from a file.
+ */
+fun load() {
+    try {
+        theatreAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
+}
