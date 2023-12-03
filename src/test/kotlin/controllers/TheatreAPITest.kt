@@ -1,4 +1,5 @@
 package controllers
+
 import models.*
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
@@ -9,6 +10,9 @@ import java.io.File
 import java.time.LocalDate
 import kotlin.test.assertEquals
 
+/**
+ * Unit tests for the TheatreAPI class.
+ */
 class TheatreAPITest {
 
     private var event1: Event? = null
@@ -18,18 +22,25 @@ class TheatreAPITest {
     private var populatedEvents: TheatreAPI? = TheatreAPI(YAMLSerializer(File("events.yaml")))
     private var emptyEvents: TheatreAPI? = TheatreAPI(YAMLSerializer(File("events.yaml")))
 
-@BeforeEach
-fun setup() {
-    event1 = Event(0,"Variations", "Comedy", "Breakfast & family drama", 13, 10, 60)
-    event2 = Event(1, "Shrek the Musical", "Comedy", "shrek in musical form", 18, 50, 120)
-    event3 = Event(2, "Maltida", "Enlighting", "Orphange Girl being adopted by a rich family", 10, 25, 120)
-    event4 = Event(3, "Talent Show", "Comedy", "People show their talents to the world", 10,30,60)
+    /**
+     * Set up the test environment before each test case.
+     */
+    @BeforeEach
+    fun setup() {
+        event1 = Event(0,"Variations", "Comedy", "Breakfast & family drama", 13, 10, 60)
+        event2 = Event(1, "Shrek the Musical", "Comedy", "shrek in musical form", 18, 50, 120)
+        event3 = Event(2, "Matilda", "Enlightening", "Orphanage Girl being adopted by a rich family", 10, 25, 120)
+        event4 = Event(3, "Talent Show", "Comedy", "People show their talents to the world", 10,30,60)
 
-    populatedEvents!!.add(event1!!)
-    populatedEvents!!.add(event2!!)
-    populatedEvents!!.add(event3!!)
-    populatedEvents!!.add(event4!!)
-}
+        populatedEvents!!.add(event1!!)
+        populatedEvents!!.add(event2!!)
+        populatedEvents!!.add(event3!!)
+        populatedEvents!!.add(event4!!)
+    }
+
+    /**
+     * Tear down the test environment after each test case.
+     */
     @AfterEach
     fun tearDown() {
         event1 = null
@@ -40,8 +51,14 @@ fun setup() {
         emptyEvents = null
     }
 
+    /**
+     * Nested tests for adding events to the TheatreAPI.
+     */
     @Nested
     inner class AddEvents {
+        /**
+         * Test adding an event to a populated list.
+         */
         @Test
         fun `adding a Event to a populated list adds to ArrayList`() {
             val newEvent = Event(0, "Sisters Act", "Comedy", "A woman gone into hiding with the sisters and joins the choir", 15, 40, 120)
@@ -51,6 +68,9 @@ fun setup() {
             assertEquals(newEvent, populatedEvents!!.findEvent(populatedEvents!!.numberOfEvents() - 1))
         }
 
+        /**
+         * Test adding an event to an empty list.
+         */
         @Test
         fun `adding a Event to an empty list adds to ArrayList`() {
             val newEvent = Event(0, "Sisters Act", "Comedy", "A woman gone into hiding with the sisters and joins the choir", 15, 40, 120)
@@ -61,28 +81,43 @@ fun setup() {
         }
     }
 
+    /**
+     * Nested tests for listing events in the TheatreAPI.
+     */
     @Nested
     inner class ListNotes {
 
+        /**
+         * Test listing all events when ArrayList is empty.
+         */
         @Test
         fun `listAllEvents returns No Events Stored message when ArrayList is empty`() {
             assertEquals(0, emptyEvents!!.numberOfEvents())
             assertTrue(emptyEvents!!.listAllEvents().lowercase().contains("no notes"))
         }
 
+        /**
+         * Test listing all events when ArrayList has notes stored.
+         */
         @Test
         fun `listAllEvents returns Events when ArrayList has notes stored`() {
             assertEquals(4, populatedEvents!!.numberOfEvents())
             val eventsString = populatedEvents!!.listAllEvents().lowercase()
             assertTrue(eventsString.contains("Variations", ignoreCase = true))
             assertTrue(eventsString.contains("Shrek the Musical", ignoreCase = true))
-            assertTrue(eventsString.contains("Maltida", ignoreCase = true))
+            assertTrue(eventsString.contains("Matilda", ignoreCase = true))
             assertTrue(eventsString.contains("Talent Show", ignoreCase = true))
         }
     }
 
+    /**
+     * Nested tests for deleting events from the TheatreAPI.
+     */
     @Nested
     inner class DeleteEvents {
+        /**
+         * Test deleting an event that does not exist.
+         */
         @Test
         fun `deleting a Event that does not exist, returns null`() {
             assertFalse(emptyEvents!!.deleteEvent(0))
@@ -90,6 +125,9 @@ fun setup() {
             assertFalse(populatedEvents!!.deleteEvent(5))
         }
 
+        /**
+         * Test deleting an event that exists.
+         */
         @Test
         fun `deleting a event that exists delete and returns deleted object`() {
             assertEquals(4, populatedEvents!!.numberOfEvents())
@@ -100,8 +138,14 @@ fun setup() {
         }
     }
 
+    /**
+     * Nested tests for updating events in the TheatreAPI.
+     */
     @Nested
     inner class UpdateEvents {
+        /**
+         * Test updating an event that does not exist.
+         */
         @Test
         fun `updating a event that does not exist returns false`() {
             assertFalse(
@@ -119,9 +163,12 @@ fun setup() {
             assertFalse(emptyEvents!!.update(0, Event(0, "Talent Show", "Comedy", "People show their talents to the world", 10, 30, 60)))
         }
 
+        /**
+         * Test updating an event that exists.
+         */
         @Test
         fun `updating a event that exists returns true and updates`() {
-           assertEquals(event4, populatedEvents!!.findEvent(3))
+            assertEquals(event4, populatedEvents!!.findEvent(3))
             assertEquals("Talent Show", populatedEvents!!.findEvent(3)!!.eventTitle)
             assertEquals("Comedy", populatedEvents!!.findEvent(3)!!.eventCategory)
             assertEquals("People show their talents to the world", populatedEvents!!.findEvent(3)!!.eventDescription)
@@ -138,8 +185,15 @@ fun setup() {
             assertEquals(90, populatedEvents!!.findEvent(3)!!.eventDuration)
         }
     }
+
+    /**
+     * Nested tests for persistence operations in the TheatreAPI.
+     */
     @Nested
     inner class PersistenceTests {
+        /**
+         * Test saving and loading an empty collection in YAML without crashing the app.
+         */
         @Test
         fun `saving and loading an empty collection in YAML doesn't crash app`() {
             val storingEvents = TheatreAPI(YAMLSerializer(File("events.yaml")))
@@ -153,6 +207,9 @@ fun setup() {
             assertEquals(storingEvents.numberOfEvents(), loadedEvents.numberOfEvents())
         }
 
+        /**
+         * Test saving and loading a loaded collection in YAML without losing data.
+         */
         @Test
         fun `saving and loading a loaded collection in YAML doesn't lose data`() {
             val storingEvents = TheatreAPI(YAMLSerializer(File("events.yaml")))
@@ -173,8 +230,14 @@ fun setup() {
         }
     }
 
+    /**
+     * Nested tests for counting methods in the TheatreAPI.
+     */
     @Nested
     inner class CountingMethods {
+        /**
+         * Test that the number of events is calculated correctly.
+         */
         @Test
         fun numberOfEventsCalculatedCorrectly() {
             assertEquals(4, populatedEvents!!.numberOfEvents())
@@ -183,18 +246,27 @@ fun setup() {
 
     }
 
+    /**
+     * Nested tests for searching methods in the TheatreAPI.
+     */
     @Nested
     inner class SearchMethods {
+        /**
+         * Test searching for an event by title when no event with that title exists.
+         */
         @Test
         fun `search event by title returns no event when no event with that title exist`() {
             assertEquals(4, populatedEvents!!.numberOfEvents())
-            val searchResults = populatedEvents!!.searchAllEvents("No results excepted")
+            val searchResults = populatedEvents!!.searchAllEvents("No results expected")
             assertTrue(searchResults.isEmpty())
 
             assertEquals(0, emptyEvents!!.numberOfEvents())
             assertTrue(emptyEvents!!.searchAllEvents(" ").isEmpty())
         }
 
+        /**
+         * Test searching for events by title when events with that title exist.
+         */
         @Test
         fun `search events by title returns events when events with that title exist`() {
             assertEquals(4, populatedEvents!!.numberOfEvents())
@@ -212,16 +284,22 @@ fun setup() {
             assertFalse(searchResults.contains("Variations"))
         }
 
+        /**
+         * Test searching for an event by category when no event with that category exists.
+         */
         @Test
-        fun `search event by category return category event when no event with that category exist`() {
+        fun `search event by category returns no event when no event with that category exist`() {
             assertEquals(4, populatedEvents!!.numberOfEvents())
-            val searchResults = populatedEvents!!.searchEventsByCategory("No results excepted")
+            val searchResults = populatedEvents!!.searchEventsByCategory("No results expected")
             assertTrue(searchResults.isEmpty())
 
             assertEquals(0, emptyEvents!!.numberOfEvents())
             assertTrue(emptyEvents!!.searchEventsByCategory(" ").isEmpty())
         }
 
+        /**
+         * Test searching for events by category when events with that category exist.
+         */
         @Test
         fun `search events by category returns events when events with that category exist`() {
             assertEquals(4, populatedEvents!!.numberOfEvents())
@@ -230,17 +308,20 @@ fun setup() {
             assertTrue(searchResults.contains("Shrek the Musical"))
             assertTrue(searchResults.contains("Variations"))
             assertTrue(searchResults.contains("Talent Show"))
-            assertFalse(searchResults.contains("Maltida"))
+            assertFalse(searchResults.contains("Matilda"))
 
             searchResults = populatedEvents!!.searchEventsByCategory("cOmEdY")
             assertTrue(searchResults.contains("Shrek the Musical"))
             assertTrue(searchResults.contains("Variations"))
             assertTrue(searchResults.contains("Talent Show"))
-            assertFalse(searchResults.contains("Maltida"))
+            assertFalse(searchResults.contains("Matilda"))
         }
 
+        /**
+         * Test searching for an event by duration when no event with that duration exists.
+         */
         @Test
-        fun `search event by duration return duration event when no event with that duration exist`() {
+        fun `search event by duration returns no event when no event with that duration exist`() {
             assertEquals(4, populatedEvents!!.numberOfEvents())
             val searchResults = populatedEvents!!.searchEventsByDuration(0)
             assertTrue(searchResults.isEmpty())
@@ -249,6 +330,9 @@ fun setup() {
             assertTrue(emptyEvents!!.searchEventsByDuration(0).isEmpty())
         }
 
+        /**
+         * Test searching for events by duration when events with that duration exist.
+         */
         @Test
         fun `search events by duration returns events when events with that duration exist`() {
             assertEquals(4, populatedEvents!!.numberOfEvents())
@@ -256,12 +340,15 @@ fun setup() {
             var searchResults = populatedEvents!!.searchEventsByDuration(60)
             assertTrue(searchResults.contains("Variations"))
             assertTrue(searchResults.contains("Talent Show"))
-            assertFalse(searchResults.contains("Maltida"))
+            assertFalse(searchResults.contains("Matilda"))
             assertFalse(searchResults.contains("Shrek the Musical"))
         }
 
+        /**
+         * Test searching for an event by ticket price when no event with that ticket price exists.
+         */
         @Test
-        fun `search event by ticket price return event when no event with that ticket price exist`() {
+        fun `search event by ticket price returns no event when no event with that ticket price exist`() {
             assertEquals(4, populatedEvents!!.numberOfEvents())
             val searchResults = populatedEvents!!.searchEventsByTicketPrice(0)
             assertTrue(searchResults.isEmpty())
@@ -270,13 +357,20 @@ fun setup() {
             assertTrue(emptyEvents!!.searchEventsByTicketPrice(0).isEmpty())
         }
 
+        /**
+         * Test searching for events by ticket price when events with that ticket price exist.
+         */
         @Test
         fun `search events by ticket price returns events when events with that ticket price exist`() {
             assertEquals(4, populatedEvents!!.numberOfEvents())
 
             var searchResults = populatedEvents!!.searchEventsByTicketPrice(25)
-            assertTrue(searchResults.contains("Maltida"))
+            assertTrue(searchResults.contains("Matilda"))
             assertFalse(searchResults.contains("Shrek the Musical"))
         }
     }
 }
+
+
+
+

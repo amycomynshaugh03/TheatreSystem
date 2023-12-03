@@ -1,1 +1,27 @@
-[]
+- !!models.Event
+  ageRating: 13
+  booking: !!set {}
+  eventCategory: Comedy
+  eventDescription: Breakfast & family drama
+  eventDuration: 60
+  eventId: 0
+  eventTitle: Variations
+  ticketPrice: 10
+- !!models.Event
+  ageRating: 18
+  booking: !!set {}
+  eventCategory: Comedy
+  eventDescription: shrek in musical form
+  eventDuration: 120
+  eventId: 1
+  eventTitle: Shrek the Musical
+  ticketPrice: 50
+- !!models.Event
+  ageRating: 10
+  booking: !!set {}
+  eventCategory: Enlighting
+  eventDescription: Orphange Girl being adopted by a rich family
+  eventDuration: 120
+  eventId: 2
+  eventTitle: Maltida
+  ticketPrice: 25

@@ -8,16 +8,20 @@ import utils.ScannerInput.readNextLine
 import java.io.File
 import kotlin.system.exitProcess
 
-
 //private val theatreAPI = TheatreAPI(XMLSerializer(File("events.xml")))
 //private val theatreAPI = TheatreAPI(JSONSerializer(File("events.json")))
 private val theatreAPI = TheatreAPI(YAMLSerializer(File("events.yaml")))
 
-fun main(args: Array<String>)  {
-
+/**
+ * Main function to run the Theatre System application.
+ */
+fun main(args: Array<String>) {
     runMenu()
 }
 
+/**
+ * Function to continuously run the main menu of the Theatre System application.
+ */
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
@@ -39,6 +43,9 @@ fun runMenu() {
     } while (true)
 }
 
+/**
+ * Function to display the main menu options and receive user input.
+ */
 fun mainMenu() = readNextInt(
     """ 
          > -----------------------------------------------------  
@@ -70,7 +77,11 @@ fun mainMenu() = readNextInt(
          > ==>> """.trimMargin(">")
 )
 
-//Event CRUD
+// Event CRUD
+
+/**
+ * Function to add a new event to the system.
+ */
 fun addEvent() {
     val eventTitle = readNextLine("Enter a Title for the Event: ")
     val eventCategory = readNextLine("Enter a Category for the Event: ")
@@ -79,7 +90,7 @@ fun addEvent() {
     val ticketPrice = readNextInt("Enter Price for a ticket for the Event: ")
     val eventDuration = readNextInt("Enter Duration of the Event: ")
 
-    val isAdded = theatreAPI.add(Event( eventTitle = eventTitle, eventCategory = eventCategory, eventDescription = eventDescription, ageRating = ageRating, ticketPrice = ticketPrice, eventDuration = eventDuration))
+    val isAdded = theatreAPI.add(Event(eventTitle = eventTitle, eventCategory = eventCategory, eventDescription = eventDescription, ageRating = ageRating, ticketPrice = ticketPrice, eventDuration = eventDuration))
 
     if (isAdded) {
         println("Added Successfully")
@@ -88,8 +99,14 @@ fun addEvent() {
     }
 }
 
+/**
+ * Function to list all events in the system.
+ */
 fun listEvent() = println(theatreAPI.listAllEvents())
 
+/**
+ * Function to update details of an existing event.
+ */
 fun updateEvent() {
     listEvent()
     if (theatreAPI.numberOfEvents() > 0) {
@@ -113,6 +130,9 @@ fun updateEvent() {
     }
 }
 
+/**
+ * Function to delete an existing event.
+ */
 fun deleteEvent() {
     listEvent()
     if (theatreAPI.numberOfEvents() > 0) {
@@ -126,22 +146,29 @@ fun deleteEvent() {
     }
 }
 
-//Booking CRUD
+// Booking CRUD
+
+/**
+ * Function to add a booking to an existing event.
+ */
 private fun addBookingToEvent() {
     val event: Event? = askUserToChooseEvent()
-    if (event != null ) {
+    if (event != null) {
         val bookingDate = readNextLine("Enter Booking Date: ")
         val bookingTime = readNextLine("Enter Booking Time: ")
         val customerName = readNextLine("Enter Customer Name: ")
         val customerPhone = readNextInt("Enter Customer Phone Number: ")
         val paymentMethod = readNextLine("Enter a Payment Method: ")
-        val booking = Booking( bookingDate = bookingDate,bookingTime = bookingTime, customerName = customerName, customerPhone = customerPhone, paymentMethod = paymentMethod)
+        val booking = Booking(bookingDate = bookingDate, bookingTime = bookingTime, customerName = customerName, customerPhone = customerPhone, paymentMethod = paymentMethod)
         if (event.addBooking(booking))
             println("Add Successful!")
         else println("Add NOT Successful")
     }
 }
 
+/**
+ * Function to update details of an existing booking in an event.
+ */
 fun updateBookingContentsInEvent() {
     val event: Event? = askUserToChooseEvent()
     if (event != null) {
@@ -152,8 +179,8 @@ fun updateBookingContentsInEvent() {
             val newCustomerName = readNextLine("Enter a new Customer Name: ")
             val newCustomerPhone = readNextInt("Enter new Customer Phone Number: ")
             val newPaymentMethod = readNextLine("Enter a new Payment Method: ")
-            if (event.update(booking.bookingId, Booking(bookingDate = newBookingDate,bookingTime = newBookingTime,
-                    customerName = newCustomerName, customerPhone = newCustomerPhone, paymentMethod = newPaymentMethod ))) {
+            if (event.update(booking.bookingId, Booking(bookingDate = newBookingDate, bookingTime = newBookingTime,
+                    customerName = newCustomerName, customerPhone = newCustomerPhone, paymentMethod = newPaymentMethod))) {
                 println("Booking contents updated")
             } else {
                 println("Booking contents NOT updated")
@@ -164,7 +191,10 @@ fun updateBookingContentsInEvent() {
     }
 }
 
-fun deleteBooking(){
+/**
+ * Function to delete an existing booking from an event.
+ */
+fun deleteBooking() {
     val event: Event? = askUserToChooseEvent()
     if (event != null) {
         val booking: Booking? = askUserToChooseBooking(event)
@@ -179,6 +209,9 @@ fun deleteBooking(){
     }
 }
 
+/**
+ * Function to mark the payment status of a booking.
+ */
 fun markPaymentStatus() {
     val event: Event? = askUserToChooseEvent()
     if (event != null) {
@@ -187,19 +220,22 @@ fun markPaymentStatus() {
             var changeStatus = 'X'
             if (booking.isPaymentComplete) {
                 changeStatus = readNextChar("The Booking is currently complete...do you want to mark it as paid?")
-                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                if ((changeStatus == 'Y') || (changeStatus == 'y'))
                     booking.isPaymentComplete = false
-            }
-            else {
+            } else {
                 changeStatus = readNextChar("The Booking is currently unpaid...do you want to mark it as unpaid?")
-                if ((changeStatus == 'Y') ||  (changeStatus == 'y'))
+                if ((changeStatus == 'Y') || (changeStatus == 'y'))
                     booking.isPaymentComplete = true
             }
         }
     }
 }
 
-//Helper Functions
+// Helper Functions
+
+/**
+ * Function to prompt the user to choose an event from the list.
+ */
 private fun askUserToChooseEvent(): Event? {
     listEvent()
     if (theatreAPI.numberOfEvents() > 0) {
@@ -207,26 +243,32 @@ private fun askUserToChooseEvent(): Event? {
         if (event != null) {
             return event
         } else {
-                println("Event id is not valid")
-            }
+            println("Event id is not valid")
         }
+    }
     return null
 }
 
+/**
+ * Function to prompt the user to choose a booking from an event.
+ */
 private fun askUserToChooseBooking(event: Event): Booking? {
     if (event.numberOfBookings() > 0) {
         print(event.listBooking())
         return event.findOne(readNextInt("\nEnter the id of the Booking: "))
-    }
-    else{
-        println ("No Booking for chosen note")
+    } else {
+        println("No Booking for the chosen note")
         return null
     }
 }
 
-//Event - Search Functions
+// Event - Search Functions
+
+/**
+ * Function to initiate a search for events based on user criteria.
+ */
 fun searchEvents() {
-    if(theatreAPI.numberOfEvents() > 0) {
+    if (theatreAPI.numberOfEvents() > 0) {
         val option = readNextInt(
             """
                   > ----------------------------------------
@@ -250,6 +292,9 @@ fun searchEvents() {
     }
 }
 
+/**
+ * Function to search for all events based on a provided description.
+ */
 fun searchAllEvents() {
     val searchTitle = readNextLine("Enter the description to search by: ")
     val searchResults = theatreAPI.searchAllEvents(searchTitle)
@@ -260,7 +305,10 @@ fun searchAllEvents() {
     }
 }
 
-fun searchEventsByCategory(){
+/**
+ * Function to search for events based on a provided category.
+ */
+fun searchEventsByCategory() {
     val searchTitle = readNextLine("Enter the category to search by: ")
     val searchResults = theatreAPI.searchEventsByCategory(searchTitle)
     if (searchResults.isEmpty()) {
@@ -270,8 +318,10 @@ fun searchEventsByCategory(){
     }
 }
 
-fun searchEventsByDuration()
-{
+/**
+ * Function to search for events based on a provided duration.
+ */
+fun searchEventsByDuration() {
     val searchTitle = readNextInt("Enter the duration to search by: ")
     val searchResults = theatreAPI.searchEventsByDuration(searchTitle)
     if (searchResults.isEmpty()) {
@@ -281,6 +331,9 @@ fun searchEventsByDuration()
     }
 }
 
+/**
+ * Function to search for events based on a provided ticket price.
+ */
 fun searchEventsByTicketPrice() {
     val searchTitle = readNextInt("Enter the ticket price to search by: ")
     val searchResults = theatreAPI.searchEventsByTicketPrice(searchTitle)
@@ -291,9 +344,13 @@ fun searchEventsByTicketPrice() {
     }
 }
 
-//Booking Search Function
+// Booking Search Function
+
+/**
+ * Function to initiate a search for bookings based on user criteria.
+ */
 fun searchBooking() {
-    if(theatreAPI.numberOfEvents() > 0) {
+    if (theatreAPI.numberOfEvents() > 0) {
         val option = readNextInt(
             """
                   > -----------------------------------------------
@@ -313,6 +370,9 @@ fun searchBooking() {
     }
 }
 
+/**
+ * Function to search for bookings based on a provided customer name.
+ */
 fun searchBookingsByCustomerName() {
     val searchBookings = readNextLine("Enter customer name to search by: ")
     val searchResults = theatreAPI.searchBookingByCustomerName(searchBookings)
@@ -323,6 +383,9 @@ fun searchBookingsByCustomerName() {
     }
 }
 
+/**
+ * Function to search for bookings based on a provided date.
+ */
 fun searchBookingsByDate() {
     val searchBookings = readNextLine("Enter the date to search by: ")
     val searchResults = theatreAPI.searchBookingByDate(searchBookings)
@@ -333,11 +396,17 @@ fun searchBookingsByDate() {
     }
 }
 
+/**
+ * Function to exit the application.
+ */
 fun exitApp() {
     println("Exiting...bye :) ")
     exitProcess(0)
 }
 
+/**
+ * Function to save the state of the Theatre System to a file.
+ */
 fun save() {
     try {
         theatreAPI.store()
@@ -347,7 +416,7 @@ fun save() {
 }
 
 /**
- * Loads notes from a file.
+ * Function to load the state of the Theatre System from a file.
  */
 fun load() {
     try {
