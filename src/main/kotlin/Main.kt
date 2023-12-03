@@ -336,3 +336,11 @@ fun exitApp() {
     println("Exiting...bye :) ")
     exitProcess(0)
 }
+
+fun save() {
+    try {
+        theatreAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
