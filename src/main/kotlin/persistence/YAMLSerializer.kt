@@ -27,7 +27,6 @@ class YAMLSerializer(private val file: File) : Serializer {
         return obj
     }
 
-
     /**
      * Serializes the provided object and writes it to the YAML file.
      *

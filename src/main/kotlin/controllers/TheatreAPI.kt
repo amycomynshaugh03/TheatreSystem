@@ -75,8 +75,11 @@ class TheatreAPI(serializerType: Serializer) {
      * @return A formatted string containing the list of events.
      */
     fun listAllEvents() =
-        if (events.isEmpty()) "No notes stored"
-        else formatListString(events)
+        if (events.isEmpty()) {
+            "No notes stored"
+        } else {
+            formatListString(events)
+        }
 
     // Counting methods for events
 
@@ -150,8 +153,9 @@ class TheatreAPI(serializerType: Serializer) {
      * @return A formatted string containing the search results.
      */
     fun searchBookingByCustomerName(searchString: String): String {
-        return if (numberOfEvents() == 0) "No events stored"
-        else {
+        return if (numberOfEvents() == 0) {
+            "No events stored"
+        } else {
             var listOfEvent = ""
             for (event in events) {
                 for (booking in event.booking) {
@@ -160,8 +164,11 @@ class TheatreAPI(serializerType: Serializer) {
                     }
                 }
             }
-            if (listOfEvent == "") "No bookings found for: $searchString"
-            else listOfEvent
+            if (listOfEvent == "") {
+                "No bookings found for: $searchString"
+            } else {
+                listOfEvent
+            }
         }
     }
 
@@ -172,8 +179,9 @@ class TheatreAPI(serializerType: Serializer) {
      * @return A formatted string containing the search results.
      */
     fun searchBookingByDate(searchString: String): String {
-        return if (numberOfEvents() == 0) "No events stored"
-        else {
+        return if (numberOfEvents() == 0) {
+            "No events stored"
+        } else {
             var listOfEvent = ""
             for (event in events) {
                 for (booking in event.booking) {
@@ -182,8 +190,11 @@ class TheatreAPI(serializerType: Serializer) {
                     }
                 }
             }
-            if (listOfEvent == "") "No bookings found for: $searchString"
-            else listOfEvent
+            if (listOfEvent == "") {
+                "No bookings found for: $searchString"
+            } else {
+                listOfEvent
+            }
         }
     }
 

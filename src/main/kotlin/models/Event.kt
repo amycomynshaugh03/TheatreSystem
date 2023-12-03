@@ -113,8 +113,11 @@ data class Event(
      * @return A formatted string representing the bookings.
      */
     fun listBooking() =
-        if (booking.isEmpty()) "\t No Bookings Added"
-        else Utilities.formatSetString(booking)
+        if (booking.isEmpty()) {
+            "\t No Bookings Added"
+        } else {
+            Utilities.formatSetString(booking)
+        }
 
     /**
      * Returns a string representation of the event.

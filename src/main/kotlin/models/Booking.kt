@@ -26,9 +26,10 @@ data class Booking(
      * @return A formatted string representing the booking status and customer name.
      */
     override fun toString(): String {
-        return if (isPaymentComplete)
+        return if (isPaymentComplete) {
             "$bookingId: $customerName (Paid)"
-        else
+        } else {
             "$bookingId: $customerName (Unpaid)"
+        }
     }
 }

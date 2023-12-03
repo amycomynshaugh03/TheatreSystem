@@ -1,7 +1,7 @@
 package utils
 
-import models.Event
 import models.Booking
+import models.Event
 
 /**
  * A utility object containing formatting functions for events and bookings.

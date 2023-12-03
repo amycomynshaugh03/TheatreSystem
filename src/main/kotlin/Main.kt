@@ -1,6 +1,6 @@
 import controllers.TheatreAPI
-import models.Event
 import models.Booking
+import models.Event
 import mu.KotlinLogging
 import persistence.*
 import utils.ScannerInput.readNextChar
@@ -9,8 +9,8 @@ import utils.ScannerInput.readNextLine
 import java.io.File
 import kotlin.system.exitProcess
 
-//private val theatreAPI = TheatreAPI(XMLSerializer(File("events.xml")))
-//private val theatreAPI = TheatreAPI(JSONSerializer(File("events.json")))
+// private val theatreAPI = TheatreAPI(XMLSerializer(File("events.xml")))
+// private val theatreAPI = TheatreAPI(JSONSerializer(File("events.json")))
 private val theatreAPI = TheatreAPI(YAMLSerializer(File("events.yaml")))
 
 private val logger = KotlinLogging.logger {}
@@ -164,9 +164,11 @@ private fun addBookingToEvent() {
         val customerPhone = readNextInt("Enter Customer Phone Number: ")
         val paymentMethod = readNextLine("Enter a Payment Method: ")
         val booking = Booking(bookingDate = bookingDate, bookingTime = bookingTime, customerName = customerName, customerPhone = customerPhone, paymentMethod = paymentMethod)
-        if (event.addBooking(booking))
+        if (event.addBooking(booking)) {
             println("Add Successful!")
-        else logger.info("Add NOT Successful")
+        } else {
+            logger.info("Add NOT Successful")
+        }
     }
 }
 
@@ -183,8 +185,17 @@ fun updateBookingContentsInEvent() {
             val newCustomerName = readNextLine("Enter a new Customer Name: ")
             val newCustomerPhone = readNextInt("Enter new Customer Phone Number: ")
             val newPaymentMethod = readNextLine("Enter a new Payment Method: ")
-            if (event.update(booking.bookingId, Booking(bookingDate = newBookingDate, bookingTime = newBookingTime,
-                    customerName = newCustomerName, customerPhone = newCustomerPhone, paymentMethod = newPaymentMethod))) {
+            if (event.update(
+                    booking.bookingId,
+                    Booking(
+                            bookingDate = newBookingDate,
+                            bookingTime = newBookingTime,
+                            customerName = newCustomerName,
+                            customerPhone = newCustomerPhone,
+                            paymentMethod = newPaymentMethod
+                        )
+                )
+            ) {
                 println("Booking contents updated")
             } else {
                 logger.info("Booking contents NOT updated")
@@ -224,12 +235,14 @@ fun markPaymentStatus() {
             var changeStatus = 'X'
             if (booking.isPaymentComplete) {
                 changeStatus = readNextChar("The Booking is currently complete...do you want to mark it as paid?")
-                if ((changeStatus == 'Y') || (changeStatus == 'y'))
+                if ((changeStatus == 'Y') || (changeStatus == 'y')) {
                     booking.isPaymentComplete = false
+                }
             } else {
                 changeStatus = readNextChar("The Booking is currently unpaid...do you want to mark it as paid?")
-                if ((changeStatus == 'Y') || (changeStatus == 'y'))
+                if ((changeStatus == 'Y') || (changeStatus == 'y')) {
                     booking.isPaymentComplete = true
+                }
             }
         }
     }

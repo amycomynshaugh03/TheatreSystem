@@ -1,14 +1,15 @@
 package controllers
 
-import models.*
-import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.*
-import persistence.JSONSerializer
-import persistence.XMLSerializer
+import models.Event
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 import persistence.YAMLSerializer
 import java.io.File
-import java.time.LocalDate
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /**
  * Unit tests for the TheatreAPI class.
@@ -27,10 +28,10 @@ class TheatreAPITest {
      */
     @BeforeEach
     fun setup() {
-        event1 = Event(0,"Variations", "Comedy", "Breakfast & family drama", 13, 10, 60)
+        event1 = Event(0, "Variations", "Comedy", "Breakfast & family drama", 13, 10, 60)
         event2 = Event(1, "Shrek the Musical", "Comedy", "shrek in musical form", 18, 50, 120)
         event3 = Event(2, "Matilda", "Enlightening", "Orphanage Girl being adopted by a rich family", 10, 25, 120)
-        event4 = Event(3, "Talent Show", "Comedy", "People show their talents to the world", 10,30,60)
+        event4 = Event(3, "Talent Show", "Comedy", "People show their talents to the world", 10, 30, 60)
 
         populatedEvents!!.add(event1!!)
         populatedEvents!!.add(event2!!)
@@ -47,7 +48,7 @@ class TheatreAPITest {
         event2 = null
         event3 = null
         event4 = null
-        populatedEvents= null
+        populatedEvents = null
         emptyEvents = null
     }
 
@@ -176,7 +177,7 @@ class TheatreAPITest {
             assertEquals(30, populatedEvents!!.findEvent(3)!!.ticketPrice)
             assertEquals(60, populatedEvents!!.findEvent(3)!!.eventDuration)
 
-            assertTrue(populatedEvents!!.update(3, Event(3, "Updating Event","Hilarious", "Showcasing different talents to four judges, who will win?", 12, 35, 90)))
+            assertTrue(populatedEvents!!.update(3, Event(3, "Updating Event", "Hilarious", "Showcasing different talents to four judges, who will win?", 12, 35, 90)))
             assertEquals("Updating Event", populatedEvents!!.findEvent(3)!!.eventTitle)
             assertEquals("Hilarious", populatedEvents!!.findEvent(3)!!.eventCategory)
             assertEquals("Showcasing different talents to four judges, who will win?", populatedEvents!!.findEvent(3)!!.eventDescription)
@@ -243,7 +244,6 @@ class TheatreAPITest {
             assertEquals(4, populatedEvents!!.numberOfEvents())
             assertEquals(0, emptyEvents!!.numberOfEvents())
         }
-
     }
 
     /**
@@ -370,7 +370,3 @@ class TheatreAPITest {
         }
     }
 }
-
-
-
-

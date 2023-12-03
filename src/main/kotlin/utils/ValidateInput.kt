@@ -1,6 +1,5 @@
 package utils
 
-import utils.ScannerInput.readNextInt
 import java.util.*
 
 /**
@@ -19,9 +18,9 @@ object ValidateInput {
         print(prompt)
         var input = Scanner(System.`in`).nextLine()
         do {
-            if (CategoryUtility.isValidCategory(input))
+            if (CategoryUtility.isValidCategory(input)) {
                 return input
-            else {
+            } else {
                 print("Invalid category $input. Please try again: ")
                 input = Scanner(System.`in`).nextLine()
             }
