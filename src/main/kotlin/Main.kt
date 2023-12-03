@@ -288,14 +288,14 @@ fun searchBooking() {
         val option = readNextInt(
             """
                   > -----------------------------------------------
-                  > |   1 -> Search ALL Bookings                  |
+                  > |   1 -> Search Bookings by Customer Name     |
                   > |   2 -> Search Bookings by Date              |
                   > -----------------------------------------------
          > ==>> """.trimMargin(">")
         )
 
         when (option) {
-            1 -> searchBookingsByPerformance()
+            1 -> searchBookingsByCustomerName()
             2 -> searchBookingsByDate()
             else -> println("Invalid option entered: $option")
         }
@@ -304,9 +304,9 @@ fun searchBooking() {
     }
 }
 
-fun searchBookingsByPerformance() {
-    val searchBookings = readNextLine("Enter the item contents to search by: ")
-    val searchResults = theatreAPI.searchBookingByPerformance(searchBookings)
+fun searchBookingsByCustomerName() {
+    val searchBookings = readNextLine("Enter customer name to search by: ")
+    val searchResults = theatreAPI.searchBookingByCustomerName(searchBookings)
     if (searchResults.isEmpty()) {
         println("No bookings found")
     } else {
