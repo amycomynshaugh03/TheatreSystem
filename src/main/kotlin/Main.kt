@@ -30,6 +30,8 @@ fun runMenu() {
             8 -> markPaymentStatus()
             9 -> searchEvents()
             10 -> searchBooking()
+            20 -> save()
+            21 -> load()
             0 -> exitApp()
             else -> println("Invalid menu choice: $option")
         }
@@ -58,6 +60,9 @@ fun mainMenu() = readNextInt(
          > |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| 
          > |          -REPORT MENU FOR BOOKINGS-               |                                
          > |   10 -> Search for all Bookings                   |
+         > |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         > |    20 -> Save Event                               |
+         > |    21 -> Load Event                               |
          > -----------------------------------------------------  
          > |   0) Exit                                         |
          > -----------------------------------------------------  
