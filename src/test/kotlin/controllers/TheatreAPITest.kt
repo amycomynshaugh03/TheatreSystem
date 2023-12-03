@@ -183,7 +183,36 @@ fun setup() {
 
     }
 
+    @Nested
+    inner class SearchMethods {
+        @Test
+        fun `search event by title returns no event when no event with that title exist`() {
+            assertEquals(4, populatedEvents!!.numberOfEvents())
+            val searchResults = populatedEvents!!.searchAllEvents("No results excepted")
+            assertTrue(searchResults.isEmpty())
 
+            assertEquals(0, emptyEvents!!.numberOfEvents())
+            assertTrue(emptyEvents!!.searchAllEvents(" ").isEmpty())
+        }
+
+        @Test
+        fun `search events by title returns events when events with that title exist`() {
+            assertEquals(4, populatedEvents!!.numberOfEvents())
+
+            var searchResults = populatedEvents!!.searchAllEvents("Talent Show")
+            assertTrue(searchResults.contains("Talent Show"))
+            assertFalse(searchResults.contains("Variations"))
+
+            searchResults = populatedEvents!!.searchAllEvents("Talent")
+            assertTrue(searchResults.contains("Talent Show"))
+            assertFalse(searchResults.contains(" Variations"))
+
+            searchResults = populatedEvents!!.searchAllEvents("sHoW")
+            assertTrue(searchResults.contains("Talent Show"))
+            assertFalse(searchResults.contains("Variations"))
+        }
+
+    }
 
 
 
