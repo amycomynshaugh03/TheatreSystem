@@ -17,7 +17,7 @@ class TheatreAPI(serializerType : Serializer) {
         event.eventId = getId()
         return events.add(event)
     }
-    fun delete(id: Int) = events.removeIf { note -> note.eventId == id }
+    fun deleteEvent(id: Int) = events.removeIf { note -> note.eventId == id }
 
     fun update(id: Int, event: Event?): Boolean {
         val foundEvent = findEvent(id)

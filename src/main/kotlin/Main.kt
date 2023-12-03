@@ -117,7 +117,7 @@ fun deleteEvent() {
     listEvent()
     if (theatreAPI.numberOfEvents() > 0) {
         val id = readNextInt("Enter the id of the note to delete: ")
-        val noteToDelete = theatreAPI.delete(id)
+        val noteToDelete = theatreAPI.deleteEvent(id)
         if (noteToDelete) {
             println("Delete Successful!")
         } else {
