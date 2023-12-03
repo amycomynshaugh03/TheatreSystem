@@ -173,9 +173,20 @@ fun setup() {
         }
     }
 
+    @Nested
+    inner class CountingMethods {
+        @Test
+        fun numberOfEventsCalculatedCorrectly() {
+            assertEquals(4, populatedEvents!!.numberOfEvents())
+            assertEquals(0, emptyEvents!!.numberOfEvents())
+        }
+
+    }
 
 
 
 
 
-}
+
+
+    }
