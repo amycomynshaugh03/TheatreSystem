@@ -212,6 +212,35 @@ fun setup() {
             assertFalse(searchResults.contains("Variations"))
         }
 
+        @Test
+        fun `search event by category return category event when no event with that category exist`() {
+            assertEquals(4, populatedEvents!!.numberOfEvents())
+            val searchResults = populatedEvents!!.searchEventsByCategory("No results excepted")
+            assertTrue(searchResults.isEmpty())
+
+            assertEquals(0, emptyEvents!!.numberOfEvents())
+            assertTrue(emptyEvents!!.searchEventsByCategory(" ").isEmpty())
+        }
+
+        @Test
+        fun `search events by category returns events when events with that category exist`() {
+            assertEquals(4, populatedEvents!!.numberOfEvents())
+
+            var searchResults = populatedEvents!!.searchEventsByCategory("Comedy")
+            assertTrue(searchResults.contains("Shrek the Musical"))
+            assertTrue(searchResults.contains("Variations"))
+            assertTrue(searchResults.contains("Talent Show"))
+            assertFalse(searchResults.contains("Maltida"))
+
+            searchResults = populatedEvents!!.searchEventsByCategory("cOmEdY")
+            assertTrue(searchResults.contains("Shrek the Musical"))
+            assertTrue(searchResults.contains("Variations"))
+            assertTrue(searchResults.contains("Talent Show"))
+            assertFalse(searchResults.contains("Maltida"))
+        }
+
+
+
     }
 
 
