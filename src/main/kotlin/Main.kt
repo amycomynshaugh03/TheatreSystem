@@ -117,14 +117,12 @@ fun deleteEvent() {
 private fun addBookingToEvent() {
     val event: Event? = askUserToChooseEvent()
     if (event != null ) {
-        val bookingPerformance = readNextLine(" Enter Booking Performance: ")
         val bookingDate = readNextLine("Enter Booking Date: ")
         val bookingTime = readNextLine("Enter Booking Time: ")
         val customerName = readNextLine("Enter Customer Name: ")
         val customerPhone = readNextInt("Enter Customer Phone Number: ")
         val paymentMethod = readNextLine("Enter a Payment Method: ")
-        val paymentStatus = readNextLine("Enter a Payment Status: ")
-        val booking = Booking(bookingPerformance = bookingPerformance, bookingDate = bookingDate,bookingTime = bookingTime, customerName = customerName, customerPhone = customerPhone, paymentMethod = paymentMethod, paymentStatus = paymentStatus)
+        val booking = Booking( bookingDate = bookingDate,bookingTime = bookingTime, customerName = customerName, customerPhone = customerPhone, paymentMethod = paymentMethod)
         if (event.addBooking(booking))
             println("Add Successful!")
         else println("Add NOT Successful")
@@ -136,15 +134,13 @@ fun updateBookingContentsInEvent() {
     if (event != null) {
         val booking: Booking? = askUserToChooseBooking(event)
         if (booking != null) {
-            val newBookingPerformance = readNextLine(" Enter a new Booking Performance: ")
             val newBookingDate = readNextLine("Enter a new Booking Date: ")
             val newBookingTime = readNextLine("Enter a new Booking Time: ")
             val newCustomerName = readNextLine("Enter a new Customer Name: ")
             val newCustomerPhone = readNextInt("Enter new Customer Phone Number: ")
             val newPaymentMethod = readNextLine("Enter a new Payment Method: ")
-            val newPaymentStatus = readNextLine("Enter a new Payment Status: ")
-            if (event.update(booking.bookingId, Booking(bookingPerformance = newBookingPerformance, bookingDate = newBookingDate,bookingTime = newBookingTime,
-                    customerName = newCustomerName, customerPhone = newCustomerPhone, paymentMethod = newPaymentMethod, paymentStatus = newPaymentStatus ))) {
+            if (event.update(booking.bookingId, Booking(bookingDate = newBookingDate,bookingTime = newBookingTime,
+                    customerName = newCustomerName, customerPhone = newCustomerPhone, paymentMethod = newPaymentMethod ))) {
                 println("Booking contents updated")
             } else {
                 println("Booking contents NOT updated")

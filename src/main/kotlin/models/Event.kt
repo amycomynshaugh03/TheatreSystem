@@ -31,7 +31,6 @@ data class Event( var eventId: Int = 0,
             foundBooking.customerName = newBooking.customerName
             foundBooking.customerPhone = newBooking.customerPhone
             foundBooking.paymentMethod = newBooking.paymentMethod
-            foundBooking.paymentStatus = newBooking.paymentStatus
             return true
         }
         return false
