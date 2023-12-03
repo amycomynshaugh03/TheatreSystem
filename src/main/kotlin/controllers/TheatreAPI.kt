@@ -105,6 +105,10 @@ fun searchAllEvents(searchString: String) =
         events = serializer.read() as ArrayList<Event>
     }
 
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(events)
+    }
 
 
 
