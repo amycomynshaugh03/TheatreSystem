@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "me.amycomynshaugh"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -47,4 +47,16 @@ dependencies {
     implementation("org.yaml:snakeyaml:1.33")
     // For generating a Dokka Site from KDoc
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.9.10")
+}
+
+tasks.jar {
+    manifest.attributes["Main-Class"] = "MainKt"
+    // for building a fat jar - include all dependencies
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from(sourceSets.main.get().output)
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
+
 }
