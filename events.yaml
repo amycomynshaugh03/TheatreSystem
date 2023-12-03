@@ -19,9 +19,9 @@
 - !!models.Event
   ageRating: 10
   booking: !!set {}
-  eventCategory: Enlighting
-  eventDescription: Orphange Girl being adopted by a rich family
+  eventCategory: Enlightening
+  eventDescription: Orphanage Girl being adopted by a rich family
   eventDuration: 120
   eventId: 2
-  eventTitle: Maltida
+  eventTitle: Matilda
   ticketPrice: 25
