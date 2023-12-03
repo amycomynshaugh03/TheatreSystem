@@ -1,6 +1,7 @@
 import controllers.TheatreAPI
 import models.Event
 import models.Booking
+import mu.KotlinLogging
 import persistence.*
 import utils.ScannerInput.readNextChar
 import utils.ScannerInput.readNextInt
@@ -12,10 +13,13 @@ import kotlin.system.exitProcess
 //private val theatreAPI = TheatreAPI(JSONSerializer(File("events.json")))
 private val theatreAPI = TheatreAPI(YAMLSerializer(File("events.yaml")))
 
+private val logger = KotlinLogging.logger {}
+
 /**
  * Main function to run the Theatre System application.
  */
 fun main(args: Array<String>) {
+    logger.info("Welcome to Waterford's Theatre System")
     runMenu()
 }
 
@@ -49,7 +53,7 @@ fun runMenu() {
 fun mainMenu() = readNextInt(
     """ 
          > -----------------------------------------------------  
-         > |      Welcome to Waterford's Theatre System        |
+         > |           Waterford's Theatre System              |
          > -----------------------------------------------------  
          > |                -EVENT MENU-                       |
          > |   1 -> Add an Event                               |
@@ -95,7 +99,7 @@ fun addEvent() {
     if (isAdded) {
         println("Added Successfully")
     } else {
-        println("Add Failed")
+        logger.info("Add Failed")
     }
 }
 
@@ -122,10 +126,10 @@ fun updateEvent() {
             if (theatreAPI.update(id, Event(0, eventTitle, eventCategory, eventDescription, ageRating, ticketPrice, eventDuration))) {
                 println("Update Successful")
             } else {
-                println("Update Failed")
+                logger.info("Update Failed")
             }
         } else {
-            println("There are no notes for this index number")
+            logger.info("There are no notes for this index number")
         }
     }
 }
@@ -141,7 +145,7 @@ fun deleteEvent() {
         if (noteToDelete) {
             println("Delete Successful!")
         } else {
-            println("Delete NOT Successful")
+            logger.info("Delete NOT Successful")
         }
     }
 }
@@ -162,7 +166,7 @@ private fun addBookingToEvent() {
         val booking = Booking(bookingDate = bookingDate, bookingTime = bookingTime, customerName = customerName, customerPhone = customerPhone, paymentMethod = paymentMethod)
         if (event.addBooking(booking))
             println("Add Successful!")
-        else println("Add NOT Successful")
+        else logger.info("Add NOT Successful")
     }
 }
 
@@ -183,10 +187,10 @@ fun updateBookingContentsInEvent() {
                     customerName = newCustomerName, customerPhone = newCustomerPhone, paymentMethod = newPaymentMethod))) {
                 println("Booking contents updated")
             } else {
-                println("Booking contents NOT updated")
+                logger.info("Booking contents NOT updated")
             }
         } else {
-            println("Invalid Booking Id")
+            logger.info("Invalid Booking Id")
         }
     }
 }
@@ -203,7 +207,7 @@ fun deleteBooking() {
             if (isDeleted) {
                 println("Delete Successful!")
             } else {
-                println("Delete NOT Successful")
+                logger.info("Delete NOT Successful")
             }
         }
     }
@@ -243,7 +247,7 @@ private fun askUserToChooseEvent(): Event? {
         if (event != null) {
             return event
         } else {
-            println("Event id is not valid")
+            logger.info("Event id is not valid")
         }
     }
     return null
@@ -288,7 +292,7 @@ fun searchEvents() {
             else -> println("Invalid option entered: $option")
         }
     } else {
-        println("Option Invalid - No Events Stored")
+        logger.info("Option Invalid - No Events Stored")
     }
 }
 
@@ -299,7 +303,7 @@ fun searchAllEvents() {
     val searchTitle = readNextLine("Enter the description to search by: ")
     val searchResults = theatreAPI.searchAllEvents(searchTitle)
     if (searchResults.isEmpty()) {
-        println("No notes found")
+        logger.info("No notes found")
     } else {
         println(searchResults)
     }
@@ -312,7 +316,7 @@ fun searchEventsByCategory() {
     val searchTitle = readNextLine("Enter the category to search by: ")
     val searchResults = theatreAPI.searchEventsByCategory(searchTitle)
     if (searchResults.isEmpty()) {
-        println("No notes found")
+        logger.info("No notes found")
     } else {
         println(searchResults)
     }
@@ -325,7 +329,7 @@ fun searchEventsByDuration() {
     val searchTitle = readNextInt("Enter the duration to search by: ")
     val searchResults = theatreAPI.searchEventsByDuration(searchTitle)
     if (searchResults.isEmpty()) {
-        println("No notes found")
+        logger.info("No notes found")
     } else {
         println(searchResults)
     }
@@ -338,7 +342,7 @@ fun searchEventsByTicketPrice() {
     val searchTitle = readNextInt("Enter the ticket price to search by: ")
     val searchResults = theatreAPI.searchEventsByTicketPrice(searchTitle)
     if (searchResults.isEmpty()) {
-        println("No notes found")
+        logger.info("No notes found")
     } else {
         println(searchResults)
     }
@@ -366,7 +370,7 @@ fun searchBooking() {
             else -> println("Invalid option entered: $option")
         }
     } else {
-        println("Option Invalid - No Bookings Stored")
+        logger.info("Option Invalid - No Bookings Stored")
     }
 }
 
@@ -377,7 +381,7 @@ fun searchBookingsByCustomerName() {
     val searchBookings = readNextLine("Enter customer name to search by: ")
     val searchResults = theatreAPI.searchBookingByCustomerName(searchBookings)
     if (searchResults.isEmpty()) {
-        println("No bookings found")
+        logger.info("No bookings found")
     } else {
         println(searchResults)
     }
@@ -390,7 +394,7 @@ fun searchBookingsByDate() {
     val searchBookings = readNextLine("Enter the date to search by: ")
     val searchResults = theatreAPI.searchBookingByDate(searchBookings)
     if (searchResults.isEmpty()) {
-        println("No bookings found")
+        logger.info("No bookings found")
     } else {
         println(searchResults)
     }
@@ -410,6 +414,7 @@ fun exitApp() {
 fun save() {
     try {
         theatreAPI.store()
+        println("Storing successful")
     } catch (e: Exception) {
         System.err.println("Error writing to file: $e")
     }
@@ -421,6 +426,7 @@ fun save() {
 fun load() {
     try {
         theatreAPI.load()
+        println("Load successful")
     } catch (e: Exception) {
         System.err.println("Error reading from file: $e")
     }
