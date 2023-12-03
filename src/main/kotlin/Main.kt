@@ -223,7 +223,7 @@ fun markPaymentStatus() {
                 if ((changeStatus == 'Y') || (changeStatus == 'y'))
                     booking.isPaymentComplete = false
             } else {
-                changeStatus = readNextChar("The Booking is currently unpaid...do you want to mark it as unpaid?")
+                changeStatus = readNextChar("The Booking is currently unpaid...do you want to mark it as paid?")
                 if ((changeStatus == 'Y') || (changeStatus == 'y'))
                     booking.isPaymentComplete = true
             }
