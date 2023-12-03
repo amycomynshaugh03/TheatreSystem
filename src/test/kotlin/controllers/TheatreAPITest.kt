@@ -40,6 +40,27 @@ fun setup() {
         emptyEvents = null
     }
 
+    @Nested
+    inner class AddEvents {
+        @Test
+        fun `adding a Event to a populated list adds to ArrayList`() {
+            val newEvent = Event(0, "Sisters Act", "Comedy", "A woman gone into hiding with the sisters and joins the choir", 15, 40, 120)
+            assertEquals(4, populatedEvents!!.numberOfEvents())
+            assertTrue(populatedEvents!!.add(newEvent))
+            assertEquals(5, populatedEvents!!.numberOfEvents())
+            assertEquals(newEvent, populatedEvents!!.findEvent(populatedEvents!!.numberOfEvents() - 1))
+        }
+
+        @Test
+        fun `adding a Event to an empty list adds to ArrayList`() {
+            val newEvent = Event(0, "Sisters Act", "Comedy", "A woman gone into hiding with the sisters and joins the choir", 15, 40, 120)
+            assertEquals(0, emptyEvents!!.numberOfEvents())
+            assertTrue(emptyEvents!!.add(newEvent))
+            assertEquals(1, emptyEvents!!.numberOfEvents())
+            assertEquals(newEvent, emptyEvents!!.findEvent(emptyEvents!!.numberOfEvents() - 1))
+        }
+    }
+
 
 
 
