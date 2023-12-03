@@ -1,6 +1,5 @@
 package controllers
 
-import models.Booking
 import models.Event
 import persistence.Serializer
 import utils.Utilities.formatListString
