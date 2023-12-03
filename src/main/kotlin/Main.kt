@@ -279,3 +279,25 @@ fun searchEventsByTicketPrice() {
         println(searchResults)
     }
 }
+
+//Booking Search Function
+fun searchBooking() {
+    if(theatreAPI.numberOfEvents() > 0) {
+        val option = readNextInt(
+            """
+                  > -----------------------------------------------
+                  > |   1 -> Search ALL Bookings                  |
+                  > |   2 -> Search Bookings by Payment Status    |
+                  > -----------------------------------------------
+         > ==>> """.trimMargin(">")
+        )
+
+        when (option) {
+            1 -> searchAllBookings()
+            2 -> searchBookingsByPaymentStatus()
+            else -> println("Invalid option entered: $option")
+        }
+    } else {
+        println("Option Invalid - No Bookings Stored")
+    }
+}
