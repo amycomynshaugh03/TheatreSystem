@@ -81,6 +81,22 @@ fun searchAllEvents(searchString: String) =
         }
     }
 
+    fun searchBookingByDate(searchString: String): String {
+        return if (numberOfEvents() == 0) "No events stored"
+        else {
+            var listOfEvent = ""
+            for (event in events) {
+                for (booking in event.booking) {
+                    if (booking.bookingDate.contains(searchString, ignoreCase = true)) {
+                        listOfEvent += "${event.eventId}: ${event.eventTitle} \n\t${booking}\n"
+                    }
+                }
+            }
+            if (listOfEvent == "") "No bookings found for: $searchString"
+            else listOfEvent
+        }
+    }
+
 
 
 

@@ -289,14 +289,14 @@ fun searchBooking() {
             """
                   > -----------------------------------------------
                   > |   1 -> Search ALL Bookings                  |
-                  > |   2 -> Search Bookings by Payment Status    |
+                  > |   2 -> Search Bookings by Date              |
                   > -----------------------------------------------
          > ==>> """.trimMargin(">")
         )
 
         when (option) {
             1 -> searchBookingsByPerformance()
-            //2 -> searchBookingsByPaymentStatus()
+            2 -> searchBookingsByDate()
             else -> println("Invalid option entered: $option")
         }
     } else {
@@ -307,6 +307,16 @@ fun searchBooking() {
 fun searchBookingsByPerformance() {
     val searchBookings = readNextLine("Enter the item contents to search by: ")
     val searchResults = theatreAPI.searchBookingByPerformance(searchBookings)
+    if (searchResults.isEmpty()) {
+        println("No bookings found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchBookingsByDate() {
+    val searchBookings = readNextLine("Enter the date to search by: ")
+    val searchResults = theatreAPI.searchBookingByDate(searchBookings)
     if (searchResults.isEmpty()) {
         println("No bookings found")
     } else {
