@@ -8,11 +8,13 @@ import utils.ScannerInput.readNextLine
 import java.io.File
 import kotlin.system.exitProcess
 
-private lateinit var theatreAPI: TheatreAPI
 
+//private val theatreAPI = TheatreAPI(XMLSerializer(File("events.xml")))
+//private val theatreAPI = TheatreAPI(JSONSerializer(File("events.json")))
+private val theatreAPI = TheatreAPI(YAMLSerializer(File("events.yaml")))
 
 fun main(args: Array<String>)  {
-    theatreAPI = TheatreAPI(selectSerializer())
+
     runMenu()
 }
 
@@ -352,30 +354,5 @@ fun load() {
         theatreAPI.load()
     } catch (e: Exception) {
         System.err.println("Error reading from file: $e")
-    }
-}
-//Select Serializer
-fun selectSerializer(): Serializer {
-    while (true) {
-        val choice = readNextInt(""""Which persistence would you like to save to this event: )
-        
-         | 1 -> XML
-         | 2 -> JSON
-         | 3 -> YAML
-         |Enter: """.trimMargin())
-
-        val serializer = when (choice) {
-            1 -> XMLSerializer(File("notes.xml"))
-            2 -> JSONSerializer(File("notes.json"))
-            3 -> YAMLSerializer(File("notes.yaml"))
-            else -> null
-        }
-
-        if (serializer != null) {
-            return serializer
-        } else {
-            println("Invalid choice. Please try again")
-        }
-
     }
 }
