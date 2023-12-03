@@ -260,13 +260,23 @@ fun setup() {
             assertFalse(searchResults.contains("Shrek the Musical"))
         }
 
+        @Test
+        fun `search event by ticket price return event when no event with that ticket price exist`() {
+            assertEquals(4, populatedEvents!!.numberOfEvents())
+            val searchResults = populatedEvents!!.searchEventsByTicketPrice(0)
+            assertTrue(searchResults.isEmpty())
 
+            assertEquals(0, emptyEvents!!.numberOfEvents())
+            assertTrue(emptyEvents!!.searchEventsByTicketPrice(0).isEmpty())
+        }
 
+        @Test
+        fun `search events by ticket price returns events when events with that ticket price exist`() {
+            assertEquals(4, populatedEvents!!.numberOfEvents())
 
+            var searchResults = populatedEvents!!.searchEventsByTicketPrice(25)
+            assertTrue(searchResults.contains("Maltida"))
+            assertFalse(searchResults.contains("Shrek the Musical"))
+        }
     }
-
-
-
-
-
-    }
+}
